@@ -2,22 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    public Vector2 mousePosLastFrame;
-    public bool mousePressedLastFrame;
-    public Vector2 mousePos;
-    public bool mousePressedThisFrame;
+    Vector2 mousePosLastFrame;
+    bool mousePressedLastFrame;
+    Vector2 mousePos;
+    bool mousePressedThisFrame;
     public float movementFactor;
+    public bool useSwipeMovement;
+    public Camera gameCamera;
 
     void Update()
     {
-        LastFrame();
-        ThisFrame();
-        Movement();
+        if (useSwipeMovement)
+        {
+            LastFrame();
+            ThisFrame();
+            SwipeMovement();
+        }
+        else
+        {
+            FollowMovement();
+        }
     }
 
-    void Movement()
+    void FollowMovement()
+    {
+        mousePos = Input.mousePosition;
+        Vector3 worldPos = gameCamera.ScreenToWorldPoint(mousePos);
+        worldPos.z = 0;
+        transform.position = worldPos;
+    }
+
+    void SwipeMovement()
     {
         if (mousePressedThisFrame && mousePressedLastFrame)
         {

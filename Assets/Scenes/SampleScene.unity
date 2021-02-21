@@ -346,8 +346,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc3bb83fe9d0814d986216cfb44a0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mousePosLastFrame: {x: 0, y: 0}
-  mousePressedLastFrame: 0
-  mousePos: {x: 0, y: 0}
-  mousePressedThisFrame: 0
   movementFactor: 10
+  useSwipeMovement: 0
+  gameCamera: {fileID: 519420031}
