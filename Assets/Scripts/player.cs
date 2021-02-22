@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -35,21 +36,42 @@ public class Player : MonoBehaviour
         CheckLimits(null);
         if (health <= 0)
         {
-            print($"YOU LOST! wave: {gameController.wave}");
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        HandlePrefs();
+        SceneManager.LoadScene(0);
+    }
+
+    private void HandlePrefs()
+    {
+        PlayerPrefs.SetInt("Last score", gameController.wave);
+        if (PlayerPrefs.HasKey("Highscore"))
+        {
+            PlayerPrefs.SetInt("Highscore", System.Math.Max(gameController.wave, PlayerPrefs.GetInt("Highscore")));
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Highscore", gameController.wave);
+        }
+        PlayerPrefs.Save();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "PlayerBullet")
+        if (!other.tag.Equals("PlayerBullet"))
         {
             Debug.Log($"{this.name} collided with {other.name}");
         }
-        if(other.tag == "Enemy")
+        if(other.tag.Equals("Enemy"))
         {
             if (other.TryGetComponent<BasicEnemy>(out var basicEnemy))
             {
                 DealDamage(basicEnemy.damage);
+                Destroy(other.gameObject);
             }
         }
     }
