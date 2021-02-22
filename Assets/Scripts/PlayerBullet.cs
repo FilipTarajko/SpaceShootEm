@@ -18,4 +18,17 @@ public class PlayerBullet : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"{this.name} collided with {other.name}");
+        if (other.tag == "Enemy")
+        {
+            if(other.TryGetComponent<BasicEnemy>(out var basicEnemy))
+            {
+                basicEnemy.DealDamage(damage);
+            }
+            Destroy(this.gameObject);
+        }
+    }
 }

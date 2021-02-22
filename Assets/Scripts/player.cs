@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        print("Shot shot");
+        //print("Shot shot");
         PlayerBullet spawnedBullet = Instantiate(bullet, this.transform);
         spawnedBullet.transform.SetParent(dynamic.transform);
         spawnedBullet.speed = bulletSpeed;
