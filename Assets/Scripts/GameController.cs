@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     public BasicEnemy basicEnemy;
     public GameObject dynamic;
+    public int wave;
 
     void Start()
     {
@@ -14,8 +15,9 @@ public class GameController : MonoBehaviour
 
     IEnumerator WaveStarter()
     {
-        for (int wave = 1; ; wave++)
+        for (;;)
         {
+            wave += 1;
             SpawnWave(wave);
             yield return new WaitForSeconds(5);
         }
@@ -31,7 +33,7 @@ public class GameController : MonoBehaviour
             BasicEnemy spawnedEnemy = Instantiate(basicEnemy, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), dynamic.transform);
             spawnedEnemy.health = wave;
             spawnedEnemy.speed = wave*100+1000;
-            spawnedEnemy.health = wave*5;
+            spawnedEnemy.damage = 1;
         }
     }
 }

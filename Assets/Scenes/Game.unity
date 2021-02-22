@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basicEnemy: {fileID: 8097710572901026427, guid: 70b7d2fe127a1624e971e96da08cab60, type: 3}
   dynamic: {fileID: 1933994075}
+  wave: 0
 --- !u!4 &221143662
 Transform:
   m_ObjectHideFlags: 0
@@ -645,6 +646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputLayer: {fileID: 788854245}
+  gameController: {fileID: 221143661}
   swipeFactor: 1
   useSwipeMovement: 1
   toplimit: 1150
@@ -655,6 +657,7 @@ MonoBehaviour:
   dynamic: {fileID: 1933994075}
   bulletSpeed: 1500
   damage: 3
+  health: 3
 --- !u!1 &1933994075
 GameObject:
   m_ObjectHideFlags: 0

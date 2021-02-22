@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class Player : MonoBehaviour
 {
     [SerializeField] InputLayer inputLayer;
+    [SerializeField] GameController gameController;
     Vector3 previousCursorPosition;
     Vector3 cursorDelta;
     public float swipeFactor;
@@ -17,7 +18,8 @@ public class Player : MonoBehaviour
     public PlayerBullet bullet;
     public GameObject dynamic;
     public float bulletSpeed;
-    public float damage;
+    public double damage;
+    public double health;
 
     private void Start()
     {
@@ -31,11 +33,30 @@ public class Player : MonoBehaviour
     private void Update()
     {
         CheckLimits(null);
+        if (health <= 0)
+        {
+            print($"YOU LOST! wave: {gameController.wave}");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"{this.name} collided with {other.name}");
+        if (other.tag != "PlayerBullet")
+        {
+            Debug.Log($"{this.name} collided with {other.name}");
+        }
+        if(other.tag == "Enemy")
+        {
+            if (other.TryGetComponent<BasicEnemy>(out var basicEnemy))
+            {
+                DealDamage(basicEnemy.damage);
+            }
+        }
+    }
+
+    private void DealDamage(double enemyDamage)
+    {
+        health -= enemyDamage;
     }
 
     IEnumerator ShootingCoroutine()

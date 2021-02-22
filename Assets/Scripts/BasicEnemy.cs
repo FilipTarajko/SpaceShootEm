@@ -6,7 +6,7 @@ public class BasicEnemy : MonoBehaviour
 {
     public double health;
     public float speed;
-    public float damage;
+    public double damage;
 
     void Update()
     {
