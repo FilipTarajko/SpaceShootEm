@@ -1,58 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
-    Vector2 mousePosLastFrame;
-    bool mousePressedLastFrame;
-    Vector2 mousePos;
-    bool mousePressedThisFrame;
-    public float movementFactor;
+    [SerializeField] InputLayer inputLayer;
+    Vector3 previousCursorPosition;
+    Vector3 cursorDelta;
+    public float swipeFactor;
     public bool useSwipeMovement;
-    public Camera gameCamera;
+    private void Start()
+    {
+        inputLayer.OnBeginDragAction += StartOffsetMovement;
+        inputLayer.OnDragAction += DoOffsetMovement;
+        inputLayer.OnDragAction += MouseFollowMovement;
+    }
 
-    void Update()
+    void MouseFollowMovement(PointerEventData eventData)
+    {
+        if (!useSwipeMovement)
+        {
+            Vector3 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            targetPos.z = 0;
+            transform.position = targetPos;
+        }
+    }
+
+    void StartOffsetMovement(PointerEventData eventData)
     {
         if (useSwipeMovement)
         {
-            LastFrame();
-            ThisFrame();
-            SwipeMovement();
+            previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
         }
-        else
+    }
+
+    void DoOffsetMovement(PointerEventData eventData)
+    {
+        if (useSwipeMovement)
         {
-            FollowMovement();
+            cursorDelta = previousCursorPosition - Camera.main.ScreenToWorldPoint(eventData.position);
+            previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
+            transform.Translate(-cursorDelta * swipeFactor);
         }
-    }
-
-    void FollowMovement()
-    {
-        mousePos = Input.mousePosition;
-        Vector3 worldPos = gameCamera.ScreenToWorldPoint(mousePos);
-        worldPos.z = 0;
-        transform.position = worldPos;
-    }
-
-    void SwipeMovement()
-    {
-        if (mousePressedThisFrame && mousePressedLastFrame)
-        {
-            float xDiff = (mousePos.x - mousePosLastFrame.x)/1000*movementFactor;
-            float yDiff = (mousePos.y - mousePosLastFrame.y)/1000*movementFactor;
-            transform.Translate(xDiff, yDiff, 0);
-        }
-    }
-
-    void LastFrame()
-    {
-        mousePressedLastFrame = mousePressedThisFrame;
-        mousePosLastFrame = mousePos;
-    }
-
-    void ThisFrame()
-    {
-        mousePressedThisFrame = Input.GetMouseButton(0);
-        mousePos = Input.mousePosition;
     }
 }
