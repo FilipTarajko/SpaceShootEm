@@ -21,6 +21,11 @@ public class Player : MonoBehaviour
         inputLayer.OnDragAction += MouseFollowMovement;
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log(collision);
+    }
+
     private void Update()
     {
         CheckLimits();
