@@ -11,11 +11,11 @@ public class InputLayer : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        OnBeginDragAction.Invoke(eventData);
+        OnBeginDragAction?.Invoke(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        OnDragAction.Invoke(eventData);
+        OnDragAction?.Invoke(eventData);
     }
 }
