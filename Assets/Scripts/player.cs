@@ -10,11 +10,30 @@ public class Player : MonoBehaviour
     Vector3 cursorDelta;
     public float swipeFactor;
     public bool useSwipeMovement;
+    public float toplimit;
+    public float sidelimit;
+    public float bottomlimit;
+
     private void Start()
     {
         inputLayer.OnBeginDragAction += StartOffsetMovement;
         inputLayer.OnDragAction += DoOffsetMovement;
         inputLayer.OnDragAction += MouseFollowMovement;
+    }
+
+    private void Update()
+    {
+        CheckLimits();
+    }
+
+    void CheckLimits()
+    {
+        Vector3 targetPosition = transform.position;
+        targetPosition.x = System.Math.Max(-sidelimit, targetPosition.x);
+        targetPosition.x = System.Math.Min(sidelimit, targetPosition.x);
+        targetPosition.y = System.Math.Min(toplimit, targetPosition.y);
+        targetPosition.y = System.Math.Max(-bottomlimit, targetPosition.y);
+        transform.position = targetPosition;
     }
 
     void MouseFollowMovement(PointerEventData eventData)

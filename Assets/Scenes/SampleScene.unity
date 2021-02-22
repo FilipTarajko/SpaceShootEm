@@ -563,3 +563,6 @@ MonoBehaviour:
   inputLayer: {fileID: 788854245}
   swipeFactor: 2
   useSwipeMovement: 1
+  toplimit: 1150
+  sidelimit: 480
+  bottomlimit: 1150
