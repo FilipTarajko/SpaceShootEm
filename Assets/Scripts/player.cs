@@ -19,19 +19,20 @@ public class Player : MonoBehaviour
         inputLayer.OnBeginDragAction += StartOffsetMovement;
         inputLayer.OnDragAction += DoOffsetMovement;
         inputLayer.OnDragAction += MouseFollowMovement;
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log(collision);
+        //inputLayer.OnDragAction += CheckLimits;
     }
 
     private void Update()
     {
-        CheckLimits();
+        CheckLimits(null);
     }
 
-    void CheckLimits()
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"{this.name} collided with {other.name}");
+    }
+
+    void CheckLimits(PointerEventData eventData)
     {
         Vector3 targetPosition = transform.position;
         targetPosition.x = System.Math.Max(-sidelimit, targetPosition.x);
