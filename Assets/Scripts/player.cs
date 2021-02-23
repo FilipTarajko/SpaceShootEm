@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
     {
         //print("Shot shot");
         PlayerBullet spawnedBullet = Instantiate(bullet, this.transform);
+        spawnedBullet.transform.Translate(new Vector3(0, 0, +1));
         spawnedBullet.transform.SetParent(dynamic.transform);
         spawnedBullet.speed = bulletSpeed;
         spawnedBullet.damage = damage;
