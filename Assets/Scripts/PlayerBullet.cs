@@ -23,10 +23,6 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.tag.Equals("Player"))
-        {
-            Debug.Log($"{this.name} collided with {other.name}");
-        }
         if (other.tag.Equals("Enemy"))
         {
             if(other.TryGetComponent<BasicEnemy>(out var basicEnemy))
