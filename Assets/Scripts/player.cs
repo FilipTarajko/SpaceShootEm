@@ -21,10 +21,15 @@ public class Player : MonoBehaviour
     public GameObject dynamic;
     public float bulletSpeed;
     public double damage;
-    public double health;
+    public float maxHealth;
+    public float health;
+
+    [SerializeField] Healthbar healthbar;
 
     private void Start()
     {
+        healthbar.SetMaxHealth(maxHealth);
+        healthbar.SetHealth(health);
         StartCoroutine(ShootingCoroutine());
         inputLayer.OnBeginDragAction += StartOffsetMovement;
         inputLayer.OnDragAction += DoOffsetMovement;
@@ -67,15 +72,25 @@ public class Player : MonoBehaviour
         {
             if (other.TryGetComponent<BasicEnemy>(out var basicEnemy))
             {
-                DealDamage(basicEnemy.damage);
+                TakeDamage(basicEnemy.damage);
                 Destroy(other.gameObject);
             }
         }
     }
 
-    private void DealDamage(double enemyDamage)
+    private void TakeDamage(float enemyDamage)
     {
         health -= enemyDamage;
+        healthbar.SetHealth(health);
+    }
+
+    public void GetHealing(float healingAmount)
+    {
+        if (health < maxHealth)
+        {
+            health = System.Math.Min(health + healingAmount, maxHealth);
+        }
+        healthbar.SetHealth(health);
     }
 
     IEnumerator ShootingCoroutine()
