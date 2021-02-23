@@ -23,8 +23,8 @@ public class GameController : MonoBehaviour
         {
             wave += 1;
             UpdateWaveText();
-            SpawnWave(wave);
-            yield return new WaitForSeconds(3);
+            StartCoroutine(SpawnWave(wave));
+            yield return new WaitForSeconds(5);
         }
     }
 
@@ -33,10 +33,11 @@ public class GameController : MonoBehaviour
         waveDisplay.text = $"Wave: {wave}";
     }
 
-    void SpawnWave(int wave)
+    IEnumerator SpawnWave(int wave)
     {
         player.GetHealing(0.1f);
-        for (int i = 0; i < 15 + 3*wave; i++)
+        int enemiesToSpawn = 50 + 8 * wave;
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
             float horizontalMargin = 50;
             float spawnX = Random.Range(-Screen.width/2+horizontalMargin, Screen.width/2-horizontalMargin);
@@ -47,6 +48,7 @@ public class GameController : MonoBehaviour
             spawnedEnemy.damage = 1;
             spawnedEnemy.gameController = this;
             spawnedEnemy.data = data;
+            yield return new WaitForSeconds(2f/(float)enemiesToSpawn);
         }
     }
 }
