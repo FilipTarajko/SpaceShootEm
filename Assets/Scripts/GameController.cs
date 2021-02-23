@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public Data data;
     public BasicEnemy basicEnemy;
     public GameObject dynamic;
     public int wave;
@@ -29,11 +30,13 @@ public class GameController : MonoBehaviour
         {
             float horizontalMargin = 50;
             float spawnX = Random.Range(-Screen.width/2+horizontalMargin, Screen.width/2-horizontalMargin);
-            float spawnY = Screen.height;
+            float spawnY = Screen.height*(0.5f+data.entityBorder);
             BasicEnemy spawnedEnemy = Instantiate(basicEnemy, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), dynamic.transform);
             spawnedEnemy.health = wave;
             spawnedEnemy.speed = wave*100+1000;
             spawnedEnemy.damage = 1;
+            spawnedEnemy.gameController = this;
+            spawnedEnemy.data = data;
         }
     }
 }

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
+    public GameController gameController;
+    public Data data;
     public float speed;
     public double damage;
 
     void Update()
     {
-        if(transform.position.y < Screen.height / 1.5)
+        if(transform.position.y < Screen.height*(0.5+data.entityBorder))
         {
             transform.Translate(new Vector3(0, speed * Time.deltaTime, 0));
         }

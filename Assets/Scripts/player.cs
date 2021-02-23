@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] InputLayer inputLayer;
     [SerializeField] GameController gameController;
+    [SerializeField] Data data;
     Vector3 previousCursorPosition;
     Vector3 cursorDelta;
     public float swipeFactor;
@@ -102,6 +103,8 @@ public class Player : MonoBehaviour
         spawnedBullet.transform.SetParent(dynamic.transform);
         spawnedBullet.speed = bulletSpeed;
         spawnedBullet.damage = damage;
+        spawnedBullet.data = data;
+        spawnedBullet.gameController = gameController;
     }
 
     void CheckLimits(PointerEventData eventData)
