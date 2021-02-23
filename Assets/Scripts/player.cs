@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField] Data data;
     Vector3 previousCursorPosition;
     Vector3 cursorDelta;
-    public float swipeFactor;
     public bool useSwipeMovement;
     public float toplimit;
     public float sidelimit;
@@ -152,7 +151,7 @@ public class Player : MonoBehaviour
         {
             cursorDelta = previousCursorPosition - Camera.main.ScreenToWorldPoint(eventData.position);
             previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-            transform.Translate(-cursorDelta * swipeFactor);
+            transform.Translate(-cursorDelta * data.sensitivity);
         }
     }
 }
