@@ -13,6 +13,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] TMP_Text sensitivityText;
     [SerializeField] float sliderDefaultValue;
 
+    [SerializeField] TMP_Text authorTextShadow;
+    [SerializeField] TMP_Text titleTextShadow;
+    public float colorChangeSpeed;
+    public float H;
+    public float S;
+    public float V;
+
     void Start()
     {
         StartMenu();
@@ -75,5 +82,17 @@ public class MenuManager : MonoBehaviour
         PlayerPrefs.SetFloat("Sensitivity", (float)System.Math.Round(sensitivity,2));
         PlayerPrefs.Save();
         HandleText(sensitivityText, "Sensitivity");
+    }
+    
+    private void Update()
+    {
+        ChangeColors();
+    }
+
+    void ChangeColors()
+    {
+        Color.RGBToHSV(authorTextShadow.color, out H, out S, out V);
+        authorTextShadow.color = Color.HSVToRGB((H + colorChangeSpeed * Time.deltaTime) % 1, S, V);
+        titleTextShadow.color = authorTextShadow.color;
     }
 }
