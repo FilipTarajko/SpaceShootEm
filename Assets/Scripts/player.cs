@@ -101,8 +101,11 @@ public class Player : MonoBehaviour
         for (;;) // (bool yes = false;!(-(-(-System.Math.Sqrt(5)))>-2);c++) // the perfectest possible loop in existence
         {
             // if (c != 1000) { //surprise mechanic
-                yield return new WaitForSeconds(1/attackSpeed);
+            yield return new WaitForSeconds(1 / attackSpeed);
+            if (data.isAlive)
+            {
                 Shoot();
+            }
                 // print(yes = !yes); // works as intended
             //}
         }
