@@ -383,7 +383,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -460,6 +460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 221143661}
+  sensitivity: 0
   entityBorder: 0.1
 --- !u!4 &705962180
 Transform:
@@ -984,7 +985,6 @@ MonoBehaviour:
   inputLayer: {fileID: 788854245}
   gameController: {fileID: 221143661}
   data: {fileID: 705962179}
-  swipeFactor: 1
   useSwipeMovement: 1
   toplimit: 1150
   sidelimit: 480
