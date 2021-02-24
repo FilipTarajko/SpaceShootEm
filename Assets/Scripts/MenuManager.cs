@@ -53,7 +53,7 @@ public class MenuManager : MonoBehaviour
     {
         if (key.Equals("Sensitivity"))
         {
-            tmptext.text = $"{key}: {PlayerPrefs.GetFloat(key)}";
+            tmptext.text = $"{key}: {PlayerPrefs.GetFloat(key):F2}";
         }
         else if (PlayerPrefs.HasKey(key))
         {
