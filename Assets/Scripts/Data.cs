@@ -7,6 +7,8 @@ public class Data : MonoBehaviour
     public GameController gameController;
     public float sensitivity;
 
+
+    public bool isAlive;
     [Header("dev settings")]
     public float entityBorder;
 

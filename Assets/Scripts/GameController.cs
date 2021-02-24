@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -15,14 +16,25 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        waveDisplay.color = new Color(1, 1, 1, 0);
         StartCoroutine(WaveStarter());
+    }
+    public IEnumerator Death()
+    {
+        waveDisplay.text = "You lost!";
+        waveDisplay.color = new Color(0.4f, 0, 0, 1);
+        StartCoroutine(WaveDisplaySize());
+        StartCoroutine(WaveDisplayColor());
+        yield return new WaitForSeconds(2.5f);
+        SceneManager.LoadScene(0);
     }
 
     IEnumerator WaveStarter()
     {
+        yield return new WaitForSeconds(1.5f);
         for (;;)
         {
-            if(enemiesParent.childCount == 0)
+            if(enemiesParent.childCount == 0 && data.isAlive)
             {
                 wave += 1;
                 UpdateWaveText();
@@ -35,23 +47,21 @@ public class GameController : MonoBehaviour
         }
     }
 
-    IEnumerator WaveDisplayColor()
+    public IEnumerator WaveDisplayColor()
     {
         Color waveDisplayColor = waveDisplay.color;
         float alpha = 0;
         for (int i = 0; i < 100; i++)
         {
             alpha += 0.01f;
-            waveDisplayColor = ChangeAlpha(waveDisplayColor, alpha);
-            waveDisplay.color = waveDisplayColor;
+            waveDisplay.color = ChangeAlpha(waveDisplayColor, alpha);
             yield return new WaitForSeconds(0.01f);
         }
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < 100; i++)
         {
             alpha -= 0.01f;
-            waveDisplayColor = ChangeAlpha(waveDisplayColor, alpha);
-            waveDisplay.color = waveDisplayColor;
+            waveDisplay.color = ChangeAlpha(waveDisplayColor, alpha);
             yield return new WaitForSeconds(0.01f);
         }
     }
@@ -61,7 +71,7 @@ public class GameController : MonoBehaviour
         return new Color(color.r, color.g, color.b, value);
     }
 
-    IEnumerator WaveDisplaySize()
+    public IEnumerator WaveDisplaySize()
     {
         waveDisplay.fontSize = 200f;
         for (int i = 0; i < 250; i++)

@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        data.isAlive = true;
         healthbar.SetMaxHealth(maxHealth);
         healthbar.SetHealth(health);
         StartCoroutine(ShootingCoroutine());
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         CheckLimits(null);
-        if (health <= 0)
+        if (health <= 0 && data.isAlive)
         {
             Die();
         }
@@ -48,7 +49,8 @@ public class Player : MonoBehaviour
     private void Die()
     {
         HandlePrefs();
-        SceneManager.LoadScene(0);
+        data.isAlive = false;
+        StartCoroutine(gameController.Death()); 
     }
 
     private void HandlePrefs()
@@ -80,12 +82,13 @@ public class Player : MonoBehaviour
     private void TakeDamage(float enemyDamage)
     {
         health -= enemyDamage;
+        Handheld.Vibrate();
         healthbar.SetHealth(health);
     }
 
     public void GetHealing(float healingAmount)
     {
-        if (health < maxHealth)
+        if (health < maxHealth && data.isAlive)
         {
             health = System.Math.Min(health + healingAmount, maxHealth);
         }
@@ -129,7 +132,7 @@ public class Player : MonoBehaviour
 
     void MouseFollowMovement(PointerEventData eventData)
     {
-        if (!useSwipeMovement)
+        if (!useSwipeMovement && data.isAlive)
         {
             Vector3 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPos.z = 0;
@@ -139,7 +142,7 @@ public class Player : MonoBehaviour
 
     void StartOffsetMovement(PointerEventData eventData)
     {
-        if (useSwipeMovement)
+        if (useSwipeMovement && data.isAlive)
         {
             previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
         }
@@ -147,7 +150,7 @@ public class Player : MonoBehaviour
 
     void DoOffsetMovement(PointerEventData eventData)
     {
-        if (useSwipeMovement)
+        if (useSwipeMovement && data.isAlive)
         {
             cursorDelta = previousCursorPosition - Camera.main.ScreenToWorldPoint(eventData.position);
             previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
