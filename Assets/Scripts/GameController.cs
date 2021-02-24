@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
     }
     public IEnumerator Death()
     {
-        waveDisplay.text = "You lost!";
+        waveDisplay.text = "You died!";
         waveDisplay.color = new Color(0.4f, 0, 0, 1);
         StartCoroutine(WaveDisplaySize());
         StartCoroutine(WaveDisplayColor());
