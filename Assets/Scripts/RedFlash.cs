@@ -11,7 +11,7 @@ public class RedFlash : MonoBehaviour
     public void Flash(float targetAlpha)
     {
         this.targetAlpha = targetAlpha;
-        alpha = 0;
+        StopCoroutine(FlashColor());
         StartCoroutine(FlashColor());
     }
 
@@ -19,7 +19,7 @@ public class RedFlash : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            alpha += targetAlpha/5;
+            alpha = System.Math.Min(alpha + targetAlpha/5, targetAlpha);
             spriteRenderer.color = ChangeAlpha(spriteRenderer.color, alpha);
             yield return new WaitForSeconds(0.01f);
         }
