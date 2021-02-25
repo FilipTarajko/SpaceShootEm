@@ -28,9 +28,16 @@ public class Data : MonoBehaviour
     private void Awake()
     {
         floatSettings.Add("Sensitivity", 1f);
+        string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash" };
+        AddBoolSettings(boolsettings);
+    }
 
-        boolSettings.Add("Vibration", false );
-        boolSettings.Add("SwipeMovement", false);
+    private void AddBoolSettings(string [] boolsettings)
+    {
+        for (int i = 0; i < boolsettings.Length; i++)
+        {
+            boolSettings.Add(boolsettings[i], true);
+        }
     }
 
     private void Start()
@@ -77,5 +84,10 @@ public class Data : MonoBehaviour
                 floatSettings[floatList[i]] = PlayerPrefs.GetFloat(floatList[i]);
             }
         }
+    }
+
+    public int CalcEnemiesToSpawn(int wave)
+    {
+        return 50 + 8*wave;
     }
 }

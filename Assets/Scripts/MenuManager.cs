@@ -23,6 +23,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject settingsMenu;
     [SerializeField] Toggle vibrationToggle;
     [SerializeField] Toggle swipeMovementToggle;
+    [SerializeField] Toggle redFlashToggle;
 
     public void ChangeMenu(GameObject targetMenu)
     {
@@ -45,26 +46,26 @@ public class MenuManager : MonoBehaviour
 
     private void StartMenu()
     {
-        InitializeSensitivity();
+        InitializeSensitivitySlider();
         HandleText(lastScore, "Last score");
         HandleText(highScore, "Highscore");
         HandleText(sensitivityText, "Sensitivity");
         HandleToggle(vibrationToggle, "Vibration");
         HandleToggle(swipeMovementToggle, "SwipeMovement");
+        HandleToggle(redFlashToggle, "RedFlash");
     }
 
     private void HandleToggle(Toggle toggle, string key)
     {
-        if (key.Equals("Vibration"))
+        if (PlayerPrefs.HasKey(key))
         {
-            vibrationToggle.isOn = Methods.IntToBool(PlayerPrefs.GetInt("Vibration"));
-            toggle.onValueChanged.AddListener(delegate { ToggleSetting(toggle.isOn, key); });
+            toggle.isOn = Methods.IntToBool(PlayerPrefs.GetInt(key));
         }
-        if (key.Equals("SwipeMovement"))
+        else
         {
-            swipeMovementToggle.isOn = Methods.IntToBool(PlayerPrefs.GetInt("SwipeMovement"));
-            toggle.onValueChanged.AddListener(delegate { ToggleSetting(toggle.isOn, key); });
+            toggle.isOn = true;
         }
+        toggle.onValueChanged.AddListener(delegate { ToggleSetting(toggle.isOn, key); });
     }
 
     private void ToggleSetting(bool value, string key)
@@ -88,7 +89,7 @@ public class MenuManager : MonoBehaviour
             tmptext.text = "";
         }
     }
-    private void InitializeSensitivity()
+    private void InitializeSensitivitySlider()
     {
         if (!PlayerPrefs.HasKey("Sensitivity"))
         {

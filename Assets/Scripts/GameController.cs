@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour
     IEnumerator SpawnWave(int wave)
     {
         player.GetHealing(0.1f);
-        int enemiesToSpawn = 50 + 8 * wave;
+        int enemiesToSpawn = data.CalcEnemiesToSpawn(wave);
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             float horizontalMargin = 50;
