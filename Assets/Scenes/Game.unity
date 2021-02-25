@@ -461,9 +461,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 221143661}
-  sensitivity: 0
+  useSwipeMovement: 1
   isAlive: 0
+  isVibration: 0
+  sensitivity: 0
   entityBorder: 0.1
+  damage: 1
+  bulletSpeed: 1500
+  maxHealth: 3
+  health: 3
+  vibrationDuration: 50
 --- !u!4 &705962180
 Transform:
   m_ObjectHideFlags: 0
@@ -1096,17 +1103,12 @@ MonoBehaviour:
   inputLayer: {fileID: 788854245}
   gameController: {fileID: 221143661}
   data: {fileID: 705962179}
-  useSwipeMovement: 1
   toplimit: 1150
   sidelimit: 480
   bottomlimit: 1120
   attackSpeed: 2
   bullet: {fileID: 7470076759303201702, guid: 32992a3065d11d848a492dc7f0675e20, type: 3}
   dynamic: {fileID: 1933994075}
-  bulletSpeed: 1500
-  damage: 3
-  maxHealth: 5
-  health: 5
   healthbar: {fileID: 1756919860}
 --- !u!1 &1756919858
 GameObject:

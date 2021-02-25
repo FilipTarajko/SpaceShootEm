@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Methods : MonoBehaviour
+public static class Methods
 {
-    public bool IntToBool(int value)
+    public static bool IntToBool(int value)
     {
         if (value == 0)
         {
@@ -16,7 +16,7 @@ public class Methods : MonoBehaviour
         }
     }
 
-    public int BoolToInt(bool value)
+    public static int BoolToInt(bool value)
     {
         if (value == true)
         {

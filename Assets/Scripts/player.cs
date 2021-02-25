@@ -11,36 +11,30 @@ public class Player : MonoBehaviour
     [SerializeField] Data data;
     Vector3 previousCursorPosition;
     Vector3 cursorDelta;
-    public bool useSwipeMovement;
     public float toplimit;
     public float sidelimit;
     public float bottomlimit;
     public float attackSpeed;
     public PlayerBullet bullet;
     public GameObject dynamic;
-    public float bulletSpeed;
-    public double damage;
-    public float maxHealth;
-    public float health;
 
     [SerializeField] Healthbar healthbar;
 
     private void Start()
     {
         data.isAlive = true;
-        healthbar.SetMaxHealth(maxHealth);
-        healthbar.SetHealth(health);
+        healthbar.SetMaxHealth(data.maxHealth);
+        healthbar.SetHealth(data.health);
         StartCoroutine(ShootingCoroutine());
         inputLayer.OnBeginDragAction += StartOffsetMovement;
         inputLayer.OnDragAction += DoOffsetMovement;
         inputLayer.OnDragAction += MouseFollowMovement;
-        //inputLayer.OnDragAction += CheckLimits;
     }
 
     private void Update()
     {
         CheckLimits(null);
-        if (health <= 0 && data.isAlive)
+        if (data.health <= 0 && data.isAlive)
         {
             Die();
         }
@@ -81,21 +75,21 @@ public class Player : MonoBehaviour
 
     private void TakeDamage(float enemyDamage)
     {
-        health -= enemyDamage;
-        if (data.isVibration)
+        data.health -= enemyDamage;
+        if (data.boolSettings["Vibration"])
         {
-            Vibration.Vibrate(25);
+            Vibration.Vibrate(data.vibrationDuration);
         }
-        healthbar.SetHealth(health);
+        healthbar.SetHealth(data.health);
     }
 
     public void GetHealing(float healingAmount)
     {
-        if (health < maxHealth && data.isAlive)
+        if (data.health < data.maxHealth && data.isAlive)
         {
-            health = System.Math.Min(health + healingAmount, maxHealth);
+            data.health = System.Math.Min(data.health + healingAmount, data.maxHealth);
         }
-        healthbar.SetHealth(health);
+        healthbar.SetHealth(data.health);
     }
 
     IEnumerator ShootingCoroutine()
@@ -118,10 +112,15 @@ public class Player : MonoBehaviour
     {
         //print("Shot shot");
         PlayerBullet spawnedBullet = Instantiate(bullet, this.transform);
+        SetBulletVariables(spawnedBullet);
+    }
+
+    private void SetBulletVariables(PlayerBullet spawnedBullet)
+    {
         spawnedBullet.transform.Translate(new Vector3(0, 0, +1));
         spawnedBullet.transform.SetParent(dynamic.transform);
-        spawnedBullet.speed = bulletSpeed;
-        spawnedBullet.damage = damage;
+        spawnedBullet.speed = data.bulletSpeed;
+        spawnedBullet.damage = data.damage;
         spawnedBullet.data = data;
         spawnedBullet.gameController = gameController;
     }
@@ -138,7 +137,7 @@ public class Player : MonoBehaviour
 
     void MouseFollowMovement(PointerEventData eventData)
     {
-        if (!useSwipeMovement && data.isAlive)
+        if (!data.boolSettings["SwipeMovement"] && data.isAlive)
         {
             Vector3 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPos.z = 0;
@@ -148,7 +147,7 @@ public class Player : MonoBehaviour
 
     void StartOffsetMovement(PointerEventData eventData)
     {
-        if (useSwipeMovement && data.isAlive)
+        if (data.boolSettings["SwipeMovement"] && data.isAlive)
         {
             previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
         }
@@ -156,11 +155,11 @@ public class Player : MonoBehaviour
 
     void DoOffsetMovement(PointerEventData eventData)
     {
-        if (useSwipeMovement && data.isAlive)
+        if (data.boolSettings["SwipeMovement"] && data.isAlive)
         {
             cursorDelta = previousCursorPosition - Camera.main.ScreenToWorldPoint(eventData.position);
             previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-            transform.Translate(-cursorDelta * data.sensitivity);
+            transform.Translate(-cursorDelta * data.floatSettings["Sensitivity"]);
         }
     }
 }

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] Methods methods;
     [SerializeField] TMP_Text lastScore;
     [SerializeField] TMP_Text highScore;
     [SerializeField] Slider slider;
@@ -23,6 +22,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject settingsMenu;
     [SerializeField] Toggle vibrationToggle;
+    [SerializeField] Toggle swipeMovementToggle;
 
     public void ChangeMenu(GameObject targetMenu)
     {
@@ -50,20 +50,26 @@ public class MenuManager : MonoBehaviour
         HandleText(highScore, "Highscore");
         HandleText(sensitivityText, "Sensitivity");
         HandleToggle(vibrationToggle, "Vibration");
+        HandleToggle(swipeMovementToggle, "SwipeMovement");
     }
 
     private void HandleToggle(Toggle toggle, string key)
     {
         if (key.Equals("Vibration"))
         {
-            vibrationToggle.isOn = methods.IntToBool(PlayerPrefs.GetInt("Vibration"));
+            vibrationToggle.isOn = Methods.IntToBool(PlayerPrefs.GetInt("Vibration"));
+            toggle.onValueChanged.AddListener(delegate { ToggleSetting(toggle.isOn, key); });
+        }
+        if (key.Equals("SwipeMovement"))
+        {
+            swipeMovementToggle.isOn = Methods.IntToBool(PlayerPrefs.GetInt("SwipeMovement"));
             toggle.onValueChanged.AddListener(delegate { ToggleSetting(toggle.isOn, key); });
         }
     }
 
     private void ToggleSetting(bool value, string key)
     {
-        PlayerPrefs.SetInt(key, methods.BoolToInt(value));
+        PlayerPrefs.SetInt(key, Methods.BoolToInt(value));
         PlayerPrefs.Save();
     }
 
