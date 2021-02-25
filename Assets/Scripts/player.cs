@@ -11,9 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField] Data data;
     Vector3 previousCursorPosition;
     Vector3 cursorDelta;
-    public float toplimit;
-    public float sidelimit;
-    public float bottomlimit;
     public float attackSpeed;
     public PlayerBullet bullet;
     public GameObject dynamic;
@@ -132,10 +129,10 @@ public class Player : MonoBehaviour
     void CheckLimits(PointerEventData eventData)
     {
         Vector3 targetPosition = transform.position;
-        targetPosition.x = System.Math.Max(-sidelimit, targetPosition.x);
-        targetPosition.x = System.Math.Min(sidelimit, targetPosition.x);
-        targetPosition.y = System.Math.Min(toplimit, targetPosition.y);
-        targetPosition.y = System.Math.Max(-bottomlimit, targetPosition.y);
+        targetPosition.x = System.Math.Max(-data.sidelimit, targetPosition.x);
+        targetPosition.x = System.Math.Min(data.sidelimit, targetPosition.x);
+        targetPosition.y = System.Math.Min(data.toplimit, targetPosition.y);
+        targetPosition.y = System.Math.Max(-data.bottomlimit, targetPosition.y);
         transform.position = targetPosition;
     }
 

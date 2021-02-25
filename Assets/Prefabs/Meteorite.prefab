@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9182650181870257957}
   - component: {fileID: 2707329226909747886}
   m_Layer: 5
-  m_Name: BasicEnemy
+  m_Name: Meteorite
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4f5dd228404c9fd4c99780e3f1a9246c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b4c7bd677734c2246b6f217ef99433d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -124,3 +124,5 @@ MonoBehaviour:
   damage: 0
   angle: 30
   movementVector: {x: 0, y: 0, z: 0}
+  minAsteroidScale: 0.5
+  maxAsteroidScale: 1.5

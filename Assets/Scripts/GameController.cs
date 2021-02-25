@@ -8,15 +8,23 @@ public class GameController : MonoBehaviour
 {
     public Data data;
     public Player player;
-    public BasicEnemy basicEnemy;
+    public BasicEnemy meteorite;
+    public BasicEnemy shootingEnemy;
     public GameObject dynamic;
     public Transform enemiesParent;
     public int wave;
     public TMP_Text waveDisplay;
     public RedFlash redFlash;
 
+    List<BasicEnemy> enemiesList = new List<BasicEnemy>();
+
     void Start()
     {
+        BasicEnemy[] enemies = { meteorite, shootingEnemy };
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemiesList.Add(enemies[i]);
+        }
         waveDisplay.color = new Color(1, 1, 1, 0);
         StartCoroutine(WaveStarter());
     }
@@ -90,21 +98,20 @@ public class GameController : MonoBehaviour
     IEnumerator SpawnWave(int wave)
     {
         player.GetHealing(0.1f);
-        int enemiesToSpawn = data.CalcEnemiesToSpawn(wave);
+        BasicEnemy enemyToSpawn = enemiesList[Random.Range(0, enemiesList.Count)];
+        int enemiesToSpawn = enemyToSpawn.CalculateEnemiesToSpawn(wave);
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            float horizontalMargin = 50;
+            float horizontalMargin = 30;
             float spawnX = Random.Range(-Screen.width/2+horizontalMargin, Screen.width/2-horizontalMargin);
             float spawnY = Screen.height*(0.5f+data.entityBorder);
-            BasicEnemy spawnedEnemy = Instantiate(basicEnemy, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), enemiesParent);
-            spawnedEnemy.health = 1;
-            spawnedEnemy.speed = wave*100+1500;
-            spawnedEnemy.damage = 1;
+            BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), enemiesParent);
+            spawnedEnemy.health = spawnedEnemy.CalculateHealth(wave); // 1;
+            spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(wave); // wave*100+1500;
+            spawnedEnemy.damage = spawnedEnemy.CalculateDamage(wave); // 1;
             spawnedEnemy.gameController = this;
             spawnedEnemy.data = data;
-            float scale = Random.Range(data.minAsteroidScale, data.maxAsteroidScale);
-            spawnedEnemy.transform.localScale = new Vector3(scale, scale, 1f);
-            yield return new WaitForSeconds(2f/(float)enemiesToSpawn);
+            yield return new WaitForSeconds(spawnedEnemy.CalculateSpawnTime(wave));
         }
     }
 }

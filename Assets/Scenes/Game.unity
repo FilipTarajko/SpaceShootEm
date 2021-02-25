@@ -154,7 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 705962179}
   player: {fileID: 1434007621}
-  basicEnemy: {fileID: 2707329226909747886, guid: 70b7d2fe127a1624e971e96da08cab60, type: 3}
+  meteorite: {fileID: 2707329226909747886, guid: 70b7d2fe127a1624e971e96da08cab60, type: 3}
+  shootingEnemy: {fileID: 7202791084296801157, guid: bc9aa852bf7f9d0449f9fee5e7a97806, type: 3}
   dynamic: {fileID: 1933994075}
   enemiesParent: {fileID: 1800233510}
   wave: 0
@@ -560,6 +561,9 @@ MonoBehaviour:
   gameController: {fileID: 221143661}
   isAlive: 0
   entityBorder: 0.1
+  toplimit: 1150
+  sidelimit: 480
+  bottomlimit: 1120
   damage: 1
   bulletSpeed: 1500
   maxHealth: 3
@@ -1200,9 +1204,6 @@ MonoBehaviour:
   inputLayer: {fileID: 788854245}
   gameController: {fileID: 221143661}
   data: {fileID: 705962179}
-  toplimit: 1150
-  sidelimit: 480
-  bottomlimit: 1120
   attackSpeed: 2
   bullet: {fileID: 7470076759303201702, guid: 32992a3065d11d848a492dc7f0675e20, type: 3}
   dynamic: {fileID: 1933994075}

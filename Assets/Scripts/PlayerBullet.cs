@@ -7,7 +7,7 @@ public class PlayerBullet : MonoBehaviour
     public GameController gameController;
     public Data data;
     public float speed;
-    public double damage;
+    public float damage;
 
     void Update()
     {

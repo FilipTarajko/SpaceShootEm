@@ -12,13 +12,14 @@ public class Data : MonoBehaviour
     public bool isAlive;
     [Header("dev settings")]
     public float entityBorder;
+    public float toplimit;
+    public float sidelimit;
+    public float bottomlimit;
     [Header("game design settings")]
-    public double damage;
+    public float damage;
     public float bulletSpeed;
     public float maxHealth;
     public float health;
-    public float minAsteroidScale;
-    public float maxAsteroidScale;
     [Header("ui/player feedback settings")]
     public long vibrationDuration;
 
@@ -86,10 +87,5 @@ public class Data : MonoBehaviour
                 floatSettings[floatList[i]] = PlayerPrefs.GetFloat(floatList[i]);
             }
         }
-    }
-
-    public int CalcEnemiesToSpawn(int wave)
-    {
-        return 50 + 8*wave;
     }
 }
