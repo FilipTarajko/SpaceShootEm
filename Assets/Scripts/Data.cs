@@ -9,8 +9,33 @@ public class Data : MonoBehaviour
 
 
     public bool isAlive;
+    public bool isVibration;
     [Header("dev settings")]
     public float entityBorder;
+
+    public bool IntToBool(int value)
+    {
+        if (value == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public int BoolToInt(bool value)
+    {
+        if (value == true)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
     private void Start()
     {
@@ -21,6 +46,14 @@ public class Data : MonoBehaviour
         else
         {
             sensitivity = 1;
+        }
+        if (PlayerPrefs.HasKey("Vibration"))
+        {
+            isVibration = IntToBool(PlayerPrefs.GetInt("Vibration"));
+        }
+        else
+        {
+            isVibration = false;
         }
     }
 }

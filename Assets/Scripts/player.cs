@@ -82,7 +82,10 @@ public class Player : MonoBehaviour
     private void TakeDamage(float enemyDamage)
     {
         health -= enemyDamage;
-        Handheld.Vibrate();
+        if (data.isVibration)
+        {
+            Vibration.Vibrate(25);
+        }
         healthbar.SetHealth(health);
     }
 
