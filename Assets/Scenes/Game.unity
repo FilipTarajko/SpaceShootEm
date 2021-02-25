@@ -564,6 +564,8 @@ MonoBehaviour:
   bulletSpeed: 1500
   maxHealth: 3
   health: 3
+  minAsteroidScale: 0.5
+  maxAsteroidScale: 1.5
   vibrationDuration: 50
 --- !u!4 &705962180
 Transform:

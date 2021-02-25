@@ -102,6 +102,8 @@ public class GameController : MonoBehaviour
             spawnedEnemy.damage = 1;
             spawnedEnemy.gameController = this;
             spawnedEnemy.data = data;
+            float scale = Random.Range(data.minAsteroidScale, data.maxAsteroidScale);
+            spawnedEnemy.transform.localScale = new Vector3(scale, scale, 1f);
             yield return new WaitForSeconds(2f/(float)enemiesToSpawn);
         }
     }

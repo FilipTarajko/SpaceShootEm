@@ -17,6 +17,8 @@ public class Data : MonoBehaviour
     public float bulletSpeed;
     public float maxHealth;
     public float health;
+    public float minAsteroidScale;
+    public float maxAsteroidScale;
     [Header("ui/player feedback settings")]
     public long vibrationDuration;
 
