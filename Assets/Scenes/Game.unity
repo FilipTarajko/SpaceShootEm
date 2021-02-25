@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 705962179}
   player: {fileID: 1434007621}
-  basicEnemy: {fileID: 8097710572901026427, guid: 70b7d2fe127a1624e971e96da08cab60, type: 3}
+  basicEnemy: {fileID: 2707329226909747886, guid: 70b7d2fe127a1624e971e96da08cab60, type: 3}
   dynamic: {fileID: 1933994075}
   enemiesParent: {fileID: 1800233510}
   wave: 0
