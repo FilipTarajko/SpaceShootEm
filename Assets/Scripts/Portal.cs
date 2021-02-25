@@ -34,7 +34,7 @@ public class Portal : BasicEnemy
     }
     public override float CalculateDamage(int wave)
     {
-        return 1;
+        return 2;
     }
     public override int CalculateEnemiesToSpawn(int wave)
     {
