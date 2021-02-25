@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     public Transform enemiesParent;
     public int wave;
     public TMP_Text waveDisplay;
+    public RedFlash redFlash;
 
     void Start()
     {

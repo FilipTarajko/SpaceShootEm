@@ -76,6 +76,10 @@ public class Player : MonoBehaviour
     private void TakeDamage(float enemyDamage)
     {
         data.health -= enemyDamage;
+        //if (data.boolSettings["FlashOnDamage"])
+        //{
+            gameController.redFlash.Flash(0.3f);
+        //}
         if (data.boolSettings["Vibration"])
         {
             Vibration.Vibrate(data.vibrationDuration);
