@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public float attackSpeed;
     public PlayerBullet bullet;
     public GameObject dynamic;
-
+    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Healthbar healthbar;
 
     private void Start()
@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
     {
         HandlePrefs();
         data.isAlive = false;
+        spriteRenderer.enabled = false;
+        healthbar.gameObject.SetActive(false);
         StartCoroutine(gameController.Death()); 
     }
 

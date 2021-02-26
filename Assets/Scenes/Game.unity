@@ -561,15 +561,13 @@ MonoBehaviour:
   gameController: {fileID: 221143661}
   isAlive: 0
   entityBorder: 0.1
-  toplimit: 1150
-  sidelimit: 480
-  bottomlimit: 1120
+  toplimit: 0.96
+  sidelimit: 0.9
+  bottomlimit: 0.93
   damage: 1
   bulletSpeed: 1500
   maxHealth: 3
   health: 3
-  minAsteroidScale: 0.5
-  maxAsteroidScale: 1.5
   vibrationDuration: 50
 --- !u!4 &705962180
 Transform:
@@ -1207,6 +1205,7 @@ MonoBehaviour:
   attackSpeed: 2
   bullet: {fileID: 7470076759303201702, guid: 32992a3065d11d848a492dc7f0675e20, type: 3}
   dynamic: {fileID: 1933994075}
+  spriteRenderer: {fileID: 1434007620}
   healthbar: {fileID: 1756919860}
 --- !u!1 &1756919858
 GameObject:

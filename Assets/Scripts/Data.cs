@@ -30,6 +30,9 @@ public class Data : MonoBehaviour
 
     private void Awake()
     {
+        toplimit *= Screen.height/2;
+        bottomlimit *= Screen.height/2;
+        sidelimit *= Screen.width/2;
         floatSettings.Add("Sensitivity", 1f);
         string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash" };
         AddBoolSettings(boolsettings);

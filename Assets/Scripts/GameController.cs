@@ -106,9 +106,9 @@ public class GameController : MonoBehaviour
             float spawnX = Random.Range(-Screen.width/2+horizontalMargin, Screen.width/2-horizontalMargin);
             float spawnY = Screen.height*(0.5f+data.entityBorder);
             BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), enemiesParent);
-            spawnedEnemy.health = spawnedEnemy.CalculateHealth(wave); // 1;
-            spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(wave); // wave*100+1500;
-            spawnedEnemy.damage = spawnedEnemy.CalculateDamage(wave); // 1;
+            spawnedEnemy.health = spawnedEnemy.CalculateHealth(wave);
+            spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(wave);
+            spawnedEnemy.damage = spawnedEnemy.CalculateDamage(wave);
             spawnedEnemy.gameController = this;
             spawnedEnemy.data = data;
             yield return new WaitForSeconds(spawnedEnemy.CalculateSpawnTime(wave));

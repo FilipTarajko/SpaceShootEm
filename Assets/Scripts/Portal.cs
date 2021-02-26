@@ -53,9 +53,9 @@ public class Portal : BasicEnemy
             BasicEnemy enemyToSpawn = gameController.meteorite;
             int enemiesToSpawn = enemyToSpawn.CalculateEnemiesToSpawn(gameController.wave);
             BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, transform.position, Quaternion.Euler(0, 0, 0), gameController.enemiesParent);
-            spawnedEnemy.health = spawnedEnemy.CalculateHealth(gameController.wave); // 1;
-            spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(gameController.wave)/3; // wave*100+1500;
-            spawnedEnemy.damage = spawnedEnemy.CalculateDamage(gameController.wave); // 1;
+            spawnedEnemy.health = spawnedEnemy.CalculateHealth(gameController.wave);
+            spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(gameController.wave)/3;
+            spawnedEnemy.damage = spawnedEnemy.CalculateDamage(gameController.wave);
             spawnedEnemy.gameController = gameController;
             spawnedEnemy.data = data;
             yield return new WaitForSeconds(spawnTime);
