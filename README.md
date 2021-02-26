@@ -1,2 +1,2 @@
 # SpaceShootEm
-my attempt at creating a simple shoot'em up game inspired by many similar games
+Mobile Shoot'em up game, working on which reminded me of my childhood dream to create something similar to *Chicken Invaders*
