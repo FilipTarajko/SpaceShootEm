@@ -336,8 +336,8 @@ MonoBehaviour:
   inner: {fileID: 4519461069351174483}
   mist: {fileID: 3077906402824944559}
   outerRotation: 15
-  innerRotation: -720
-  mistRotation: 180
+  innerRotation: -540
+  mistRotation: 30
   spawnTime: 1.2
 --- !u!1 &7907905464136180560
 GameObject:

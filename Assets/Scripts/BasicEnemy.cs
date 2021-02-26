@@ -9,12 +9,16 @@ public abstract class BasicEnemy : MonoBehaviour
     public float health;
     public float speed;
     public float damage;
+    public float powerUpPercentChance;
 
     void Update()
     {
         if (transform.position.y > -(Screen.height*(0.5+data.entityBorder)) && health > 0)
         {
-            Frame();
+            if (!data.isPaused)
+            {
+                Frame();
+            }
         }
         else
         {
@@ -24,6 +28,13 @@ public abstract class BasicEnemy : MonoBehaviour
     public abstract void Frame();
     public void Death()
     {
+        if (powerUpPercentChance > Random.Range(0f, 100f))
+        {
+            PowerUp toSpawn = gameController.powerUp;
+            PowerUp spawnedEnemy = Instantiate(toSpawn, transform.position, Quaternion.Euler(0, 0, 0), gameController.powerUpsParent);
+            spawnedEnemy.gameController = gameController;
+            spawnedEnemy.data = data;
+        }
         Destroy(this.gameObject);
     }
 

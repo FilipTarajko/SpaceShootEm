@@ -12,11 +12,25 @@ public class GameController : MonoBehaviour
     public BasicEnemy shootingEnemy;
     public GameObject dynamic;
     public Transform enemiesParent;
+    public Transform powerUpsParent;
     public int wave;
     public TMP_Text waveDisplay;
     public RedFlash redFlash;
+    public PowerUp powerUp;
 
     List<BasicEnemy> enemiesList = new List<BasicEnemy>();
+
+    private void Update()
+    {
+        if (data.isPaused)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
 
     void Start()
     {
@@ -107,6 +121,7 @@ public class GameController : MonoBehaviour
             float spawnY = Screen.height*(0.5f+data.entityBorder);
             BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), enemiesParent);
             spawnedEnemy.health = spawnedEnemy.CalculateHealth(wave);
+            spawnedEnemy.powerUpPercentChance = spawnedEnemy.health;
             spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(wave);
             spawnedEnemy.damage = spawnedEnemy.CalculateDamage(wave);
             spawnedEnemy.gameController = this;

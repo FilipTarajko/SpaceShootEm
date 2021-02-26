@@ -37,14 +37,17 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        CheckLimits(null);
-        if (data.health <= 0 && data.isAlive)
+        if (!data.isPaused)
         {
-            Die();
-        }
-        if (!data.boolSettings["SwipeMovement"])
-        {
-            MoveToLastPressedPosition();
+            CheckLimits(null);
+            if (data.health <= 0 && data.isAlive)
+            {
+                Die();
+            }
+            if (!data.boolSettings["SwipeMovement"])
+            {
+                MoveToLastPressedPosition();
+            }
         }
     }
 
@@ -90,6 +93,13 @@ public class Player : MonoBehaviour
             {
                 TakeDamage(basicEnemy.damage);
                 Destroy(other.gameObject);
+            }
+        }
+        if (other.CompareTag("PowerUp"))
+        {
+            if (other.TryGetComponent<PowerUp>(out var powerUp))
+            {
+                powerUp.Collect();
             }
         }
     }

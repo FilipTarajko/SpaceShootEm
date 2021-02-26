@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
+    [SerializeField] Data data;
     [SerializeField] GameObject parent;
     [SerializeField] Background backgroundPrefab;
     public bool isParent = false;
@@ -15,16 +16,29 @@ public class Background : MonoBehaviour
         {
             Background secondOne = Instantiate(backgroundPrefab, parent.transform);
             secondOne.transform.Translate(new Vector3(0, Screen.height, 0));
-            secondOne.speed = this.speed;
+            secondOne.speed = speed;
+            secondOne.data = data;
         }
     }
 
     private void Update()
     {
-        transform.Translate(0, -speed * Time.deltaTime, 0);
-        if (this.transform.position.y <= -Screen.height)
+        if (!data)
         {
-            transform.Translate(new Vector3(0, 2*Screen.height, 0));
+            BackgroundMovement();
+        }
+        else if (!data.isPaused)
+        {
+            BackgroundMovement();
+        }
+    }
+    
+    private void BackgroundMovement()
+    {
+        transform.Translate(0, -speed * Time.deltaTime, 0);
+        if (transform.position.y <= -Screen.height)
+        {
+            transform.Translate(new Vector3(0, 2 * Screen.height, 0));
         }
     }
 }

@@ -15,6 +15,7 @@ public class Portal : BasicEnemy
     private void Start()
     {
         StartCoroutine(MeteoriteSpawning());
+        mist.transform.Rotate(0, 0, Random.Range(0, 360));
     }
 
     public override void Frame()
@@ -22,7 +23,7 @@ public class Portal : BasicEnemy
         transform.Translate(new Vector3(0,-1,0) * speed * Time.deltaTime);
         outer.transform.Rotate(0,0,outerRotation * Time.deltaTime);
         inner.transform.Rotate(0,0,innerRotation * Time.deltaTime);
-        inner.transform.Rotate(0,0,innerRotation * Time.deltaTime);
+        mist.transform.Rotate(0,0,mistRotation * Time.deltaTime);
     }
     public override float CalculateHealth(int wave)
     {
@@ -30,7 +31,7 @@ public class Portal : BasicEnemy
     }
     public override float CalculateSpeed(int wave)
     {
-        return wave * 20 + 400;
+        return wave * 10 + 350;
     }
     public override float CalculateDamage(int wave)
     {
@@ -50,15 +51,17 @@ public class Portal : BasicEnemy
         yield return new WaitForSeconds(spawnTime*Random.Range(0f, spawnTime));
         for (; ; )
         {
-            BasicEnemy enemyToSpawn = gameController.meteorite;
-            int enemiesToSpawn = enemyToSpawn.CalculateEnemiesToSpawn(gameController.wave);
-            BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, transform.position, Quaternion.Euler(0, 0, 0), gameController.enemiesParent);
-            spawnedEnemy.health = spawnedEnemy.CalculateHealth(gameController.wave);
-            spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(gameController.wave)/3;
-            spawnedEnemy.damage = spawnedEnemy.CalculateDamage(gameController.wave);
-            spawnedEnemy.gameController = gameController;
-            spawnedEnemy.data = data;
-            yield return new WaitForSeconds(spawnTime);
+            if (!data.isPaused)
+            {
+                BasicEnemy enemyToSpawn = gameController.meteorite;
+                BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, transform.position, Quaternion.Euler(0, 0, 0), gameController.enemiesParent);
+                spawnedEnemy.health = spawnedEnemy.CalculateHealth(gameController.wave);
+                spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(gameController.wave) / 3;
+                spawnedEnemy.damage = spawnedEnemy.CalculateDamage(gameController.wave);
+                spawnedEnemy.gameController = gameController;
+                spawnedEnemy.data = data;
+                yield return new WaitForSeconds(spawnTime);
+            }
         }
     }
 }

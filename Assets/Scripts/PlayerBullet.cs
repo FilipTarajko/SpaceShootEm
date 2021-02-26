@@ -11,13 +11,16 @@ public class PlayerBullet : MonoBehaviour
 
     void Update()
     {
-        if(transform.position.y < Screen.height*(0.5+data.entityBorder))
+        if (!data.isPaused)
         {
-            transform.Translate(new Vector3(0, speed * Time.deltaTime, 0));
-        }
-        else
-        {
-            Destroy(this.gameObject);
+            if (transform.position.y < Screen.height * (0.5 + data.entityBorder))
+            {
+                transform.Translate(new Vector3(0, speed * Time.deltaTime, 0));
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 

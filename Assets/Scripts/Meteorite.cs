@@ -29,7 +29,7 @@ public class Meteorite : BasicEnemy
     }
     public override float CalculateSpeed(int wave)
     {
-        return wave * 100 + 1500;
+        return wave * 50 + 1200;
     }
     public override float CalculateDamage(int wave)
     {
