@@ -565,6 +565,7 @@ MonoBehaviour:
   toplimit: 0.96
   sidelimit: 0.9
   bottomlimit: 0.93
+  followMovementPerSec: 5000
   damage: 1
   bulletSpeed: 1500
   maxHealth: 3

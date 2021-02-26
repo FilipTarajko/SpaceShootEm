@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public GameObject dynamic;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Healthbar healthbar;
+    private Vector3 clickedPosition;
 
     private void Start()
     {
@@ -23,9 +24,16 @@ public class Player : MonoBehaviour
         healthbar.SetMaxHealth(data.maxHealth);
         healthbar.SetHealth(data.health);
         StartCoroutine(ShootingCoroutine());
-        inputLayer.OnBeginDragAction += StartOffsetMovement;
-        inputLayer.OnDragAction += DoOffsetMovement;
-        inputLayer.OnDragAction += MouseFollowMovement;
+        if (data.boolSettings["SwipeMovement"])
+        {
+            inputLayer.OnBeginDragAction += StartOffsetMovement;
+            inputLayer.OnDragAction += DoOffsetMovement;
+        }
+        else
+        {
+            inputLayer.OnPointerDownAction += MouseFollowMovement;
+            inputLayer.OnDragAction += MouseFollowMovement;
+        }
     }
 
     private void Update()
@@ -34,6 +42,22 @@ public class Player : MonoBehaviour
         if (data.health <= 0 && data.isAlive)
         {
             Die();
+        }
+        if (!data.boolSettings["SwipeMovement"])
+        {
+            MoveToLastPressedPosition();
+        }
+    }
+
+
+    private void MoveToLastPressedPosition()
+    {
+        if (data.isAlive)
+        {
+            Vector3 targetPos = clickedPosition;
+            targetPos.z = 0;
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime*data.followMovementPerSec);
+            //transform.position = targetPos;
         }
     }
 
@@ -140,29 +164,18 @@ public class Player : MonoBehaviour
 
     void MouseFollowMovement(PointerEventData eventData)
     {
-        if (!data.boolSettings["SwipeMovement"] && data.isAlive)
-        {
-            Vector3 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetPos.z = 0;
-            transform.position = targetPos;
-        }
+        clickedPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     void StartOffsetMovement(PointerEventData eventData)
     {
-        if (data.boolSettings["SwipeMovement"] && data.isAlive)
-        {
-            previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-        }
+        previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
     }
 
     void DoOffsetMovement(PointerEventData eventData)
     {
-        if (data.boolSettings["SwipeMovement"] && data.isAlive)
-        {
-            cursorDelta = previousCursorPosition - Camera.main.ScreenToWorldPoint(eventData.position);
-            previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-            transform.Translate(-cursorDelta * data.floatSettings["Sensitivity"]);
-        }
+        cursorDelta = previousCursorPosition - Camera.main.ScreenToWorldPoint(eventData.position);
+        previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
+        transform.Translate(-cursorDelta * data.floatSettings["Sensitivity"]);
     }
 }

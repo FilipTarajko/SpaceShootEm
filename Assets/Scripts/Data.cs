@@ -10,11 +10,12 @@ public class Data : MonoBehaviour
 
     [Header("game state")]
     public bool isAlive;
-    [Header("dev settings")]
+    [Header("movement settings")]
     public float entityBorder;
     public float toplimit;
     public float sidelimit;
     public float bottomlimit;
+    public float followMovementPerSec;
     [Header("game design settings")]
     public float damage;
     public float bulletSpeed;
