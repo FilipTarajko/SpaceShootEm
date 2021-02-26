@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] TMP_Text highScore;
     [SerializeField] Slider slider;
     [SerializeField] TMP_Text sensitivityText;
+    [SerializeField] TMP_Text resetButtonText;
     [SerializeField] float sliderDefaultValue;
 
     [SerializeField] TMP_Text authorTextShadow;
@@ -24,6 +25,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Toggle vibrationToggle;
     [SerializeField] Toggle swipeMovementToggle;
     [SerializeField] Toggle redFlashToggle;
+    [SerializeField] int resetButtonClicks;
+    [SerializeField] int clicksToReset;
+    private string initialResetButtonText;
+    private float initialResetButtonFontSize;
 
     public void ChangeMenu(GameObject targetMenu)
     {
@@ -39,6 +44,8 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        initialResetButtonText = resetButtonText.text;
+        initialResetButtonFontSize = resetButtonText.fontSize;
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);
         StartMenu();
@@ -46,6 +53,7 @@ public class MenuManager : MonoBehaviour
 
     private void StartMenu()
     {
+        resetButtonClicks = 0;
         InitializeSensitivitySlider();
         HandleText(lastScore, "Last score");
         HandleText(highScore, "Highscore");
@@ -108,10 +116,21 @@ public class MenuManager : MonoBehaviour
 
     public void ResetAllPrefs()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-        slider.value = sliderDefaultValue;
-        StartMenu();
+        if (resetButtonClicks == clicksToReset-1)
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+            slider.value = sliderDefaultValue;
+            StartMenu();
+            resetButtonText.text = initialResetButtonText;
+            resetButtonText.fontSize = initialResetButtonFontSize;
+        }
+        else
+        {
+            resetButtonText.fontSize = 40;
+            resetButtonClicks += 1;
+            resetButtonText.text = $"Are you sure? Tap { clicksToReset - resetButtonClicks } more times to reset.";
+        }
     }
 
     public void SensitivitySliderSet()

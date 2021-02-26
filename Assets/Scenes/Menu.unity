@@ -1814,7 +1814,7 @@ GameObject:
   - component: {fileID: 978916741}
   - component: {fileID: 978916740}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ResetButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3602,6 +3602,7 @@ MonoBehaviour:
   highScore: {fileID: 1565885863}
   slider: {fileID: 908917180}
   sensitivityText: {fileID: 2087455115}
+  resetButtonText: {fileID: 978916740}
   sliderDefaultValue: 1
   authorTextShadow: {fileID: 1468752822}
   titleTextShadow: {fileID: 1451029236}
@@ -3611,6 +3612,7 @@ MonoBehaviour:
   vibrationToggle: {fileID: 791316594}
   swipeMovementToggle: {fileID: 1710318241}
   redFlashToggle: {fileID: 346229957}
+  clicksToReset: 5
 --- !u!4 &1999722883
 Transform:
   m_ObjectHideFlags: 0
