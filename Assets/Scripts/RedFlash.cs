@@ -5,6 +5,7 @@ using UnityEngine;
 public class RedFlash : MonoBehaviour
 {
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] Data data;
     private float targetAlpha;
     private float alpha;
 
@@ -26,6 +27,7 @@ public class RedFlash : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < 25; i++)
         {
+            if (data.isAlive)
             alpha -= targetAlpha/25;
             spriteRenderer.color = ChangeAlpha(spriteRenderer.color, alpha);
             yield return new WaitForSeconds(0.01f);

@@ -22,6 +22,13 @@ public class Data : MonoBehaviour
     public float health;
     [Header("ui/player feedback settings")]
     public long vibrationDuration;
+    public float waveDisplayAppearingTime;
+    public float waveDisplayDisappearingTime;
+    public float waveDisplayFullAlphaTime;
+    public float targetFPS;
+    public float timeBetweenDisplayAndSpawn;
+    public float waveDisplayStartFontSize;
+    public float waveDisplayFontIncreaseStep;
 
     public Dictionary<string, float> floatSettings = new Dictionary<string, float>() { };
     public Dictionary<string, bool> boolSettings = new Dictionary<string, bool>() { };

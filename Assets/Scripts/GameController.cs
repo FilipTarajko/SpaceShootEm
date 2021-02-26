@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
         waveDisplay.color = new Color(0.4f, 0, 0, 1);
         StartCoroutine(WaveDisplaySize());
         StartCoroutine(WaveDisplayColor());
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(0);
     }
 
@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
                 UpdateWaveText();
                 StartCoroutine(WaveDisplaySize());
                 StartCoroutine(WaveDisplayColor());
-                yield return new WaitForSeconds(2.5f);
+                yield return new WaitForSeconds(data.timeBetweenDisplayAndSpawn);
                 StartCoroutine(SpawnWave(wave));
             }
             yield return new WaitForSeconds(0.1f);
@@ -60,18 +60,18 @@ public class GameController : MonoBehaviour
     {
         Color waveDisplayColor = waveDisplay.color;
         float alpha = 0;
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < data.waveDisplayAppearingTime*data.targetFPS; i++)
         {
-            alpha += 0.01f;
+            alpha += 1f / data.waveDisplayAppearingTime / data.targetFPS;
             waveDisplay.color = ChangeAlpha(waveDisplayColor, alpha);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(1f/data.targetFPS);
         }
-        yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < 100; i++)
+        yield return new WaitForSeconds(data.waveDisplayFullAlphaTime);
+        for (int i = 0; i < data.waveDisplayDisappearingTime*data.targetFPS; i++)
         {
-            alpha -= 0.01f;
+            alpha -= 1.01f / data.waveDisplayDisappearingTime /data.targetFPS; //at 1f didn't disappear, probably due to rounding
             waveDisplay.color = ChangeAlpha(waveDisplayColor, alpha);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(1f/data.targetFPS);
         }
     }
 
@@ -82,11 +82,11 @@ public class GameController : MonoBehaviour
 
     public IEnumerator WaveDisplaySize()
     {
-        waveDisplay.fontSize = 200f;
-        for (int i = 0; i < 250; i++)
+        waveDisplay.fontSize = data.waveDisplayStartFontSize;
+        for (int i = 0; i < data.targetFPS*(data.waveDisplayDisappearingTime+data.waveDisplayAppearingTime+data.waveDisplayFullAlphaTime); i++)
         {
-            waveDisplay.fontSize += 0.5f;
-            yield return new WaitForSeconds(0.01f);
+            waveDisplay.fontSize += data.waveDisplayFontIncreaseStep;
+            yield return new WaitForSeconds(1f/data.targetFPS);
         }
     }
 

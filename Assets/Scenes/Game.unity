@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 438645802}
+  data: {fileID: 705962179}
 --- !u!1 &443903870
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +570,13 @@ MonoBehaviour:
   maxHealth: 3
   health: 3
   vibrationDuration: 50
+  waveDisplayAppearingTime: 0.3
+  waveDisplayDisappearingTime: 0.3
+  waveDisplayFullAlphaTime: 0.3
+  targetFPS: 120
+  timeBetweenDisplayAndSpawn: 1
+  waveDisplayStartFontSize: 200
+  waveDisplayFontIncreaseStep: 0.5
 --- !u!4 &705962180
 Transform:
   m_ObjectHideFlags: 0
