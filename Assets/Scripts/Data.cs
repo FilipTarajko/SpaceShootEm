@@ -16,11 +16,12 @@ public class Data : MonoBehaviour
     public float sidelimit;
     public float bottomlimit;
     public float followMovementPerSec;
-    [Header("game design settings")]
+    [Header("balance settings")]
     public float damage;
     public float bulletSpeed;
     public float maxHealth;
     public float health;
+    public float attackSpeed;
     [Header("ui/player feedback settings")]
     public long vibrationDuration;
     public float waveDisplayAppearingTime;
@@ -30,6 +31,7 @@ public class Data : MonoBehaviour
     public float timeBetweenDisplayAndSpawn;
     public float waveDisplayStartFontSize;
     public float waveDisplayFontIncreaseStep;
+    public float redFlashMaxAlpha;
 
     public Dictionary<string, float> floatSettings = new Dictionary<string, float>() { };
     public Dictionary<string, bool> boolSettings = new Dictionary<string, bool>() { };

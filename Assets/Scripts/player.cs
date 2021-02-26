@@ -9,13 +9,12 @@ public class Player : MonoBehaviour
     [SerializeField] InputLayer inputLayer;
     [SerializeField] GameController gameController;
     [SerializeField] Data data;
-    Vector3 previousCursorPosition;
-    Vector3 cursorDelta;
-    public float attackSpeed;
-    public PlayerBullet bullet;
-    public GameObject dynamic;
+    [SerializeField] PlayerBullet bullet;
+    [SerializeField] GameObject playerBulletParent;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Healthbar healthbar;
+    private Vector3 previousCursorPosition;
+    private Vector3 cursorDelta;
     private Vector3 clickedPosition;
 
     private void Start()
@@ -56,8 +55,7 @@ public class Player : MonoBehaviour
         {
             Vector3 targetPos = clickedPosition;
             targetPos.z = 0;
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime*data.followMovementPerSec);
-            //transform.position = targetPos;
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime*data.followMovementPerSec); 
         }
     }
 
@@ -101,7 +99,7 @@ public class Player : MonoBehaviour
         data.health -= enemyDamage;
         if (data.boolSettings["RedFlash"])
         {
-            gameController.redFlash.Flash(0.3f);
+            gameController.redFlash.Flash(data.redFlashMaxAlpha);
         }
         if (data.boolSettings["Vibration"])
         {
@@ -123,7 +121,7 @@ public class Player : MonoBehaviour
     {
         for (;;)
         {
-            yield return new WaitForSeconds(1 / attackSpeed);
+            yield return new WaitForSeconds(1f / data.attackSpeed);
             if (data.isAlive)
             {
                 Shoot();
@@ -141,7 +139,7 @@ public class Player : MonoBehaviour
     private void SetBulletVariables(PlayerBullet spawnedBullet)
     {
         spawnedBullet.transform.Translate(new Vector3(0, 0, +1));
-        spawnedBullet.transform.SetParent(dynamic.transform);
+        spawnedBullet.transform.SetParent(playerBulletParent.transform);
         spawnedBullet.speed = data.bulletSpeed;
         spawnedBullet.damage = data.damage;
         spawnedBullet.data = data;
