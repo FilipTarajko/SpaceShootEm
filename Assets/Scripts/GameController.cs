@@ -32,6 +32,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void PauseUnpase()
+    {
+        data.isPaused = !data.isPaused;
+    }
+
     void Start()
     {
         BasicEnemy[] enemies = { meteorite, shootingEnemy };
