@@ -6,11 +6,10 @@ public class PowerUp : MonoBehaviour
 {
     public GameController gameController;
     public Data data;
-    public float speed = 200;
+    public float speed;
 
     void Start()
     {
-        
     }
 
     private void Movement()
@@ -20,7 +19,7 @@ public class PowerUp : MonoBehaviour
 
     public void Collect()
     {
-        data.attackSpeed += 1;
+        data.attackSpeed += data.attackSpeedPerPowerUp;
         Destroy(this.gameObject);
     }
 

@@ -32,6 +32,7 @@ public abstract class BasicEnemy : MonoBehaviour
         {
             PowerUp toSpawn = gameController.powerUp;
             PowerUp spawnedEnemy = Instantiate(toSpawn, transform.position, Quaternion.Euler(0, 0, 0), gameController.powerUpsParent);
+            spawnedEnemy.speed = data.powerUpSpeed;
             spawnedEnemy.gameController = gameController;
             spawnedEnemy.data = data;
         }

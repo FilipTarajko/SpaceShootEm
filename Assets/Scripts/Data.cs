@@ -33,6 +33,17 @@ public class Data : MonoBehaviour
     public float waveDisplayStartFontSize;
     public float waveDisplayFontIncreaseStep;
     public float redFlashMaxAlpha;
+    public Color pauseButtonDefaultColor;
+    public Color pauseButtonPausedColor;
+    public float pauseButtonPulseTime;
+    public int pauseButtonPulseDirection;
+    public float pauseButtonTargetAlpha;
+    public float pauseButtonWidth;
+    public float pauseButtonHeight;
+    [Header("powerUps")]
+    public float powerUpSpeed;
+    public float powerUpPercentChancePerHealth;
+    public float attackSpeedPerPowerUp;
 
     public Dictionary<string, float> floatSettings = new Dictionary<string, float>() { };
     public Dictionary<string, bool> boolSettings = new Dictionary<string, bool>() { };

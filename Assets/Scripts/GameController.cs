@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -17,24 +18,51 @@ public class GameController : MonoBehaviour
     public TMP_Text waveDisplay;
     public RedFlash redFlash;
     public PowerUp powerUp;
+    public Button pauseButton;
 
     List<BasicEnemy> enemiesList = new List<BasicEnemy>();
-
-    private void Update()
-    {
-        if (data.isPaused)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
-    }
 
     public void PauseUnpase()
     {
         data.isPaused = !data.isPaused;
+        if (data.isPaused)
+        {
+            Time.timeScale = 0;
+            pauseButton.image.color = data.pauseButtonPausedColor;
+            pauseButton.transform.localScale *= 2;
+            pauseButton.transform.position -= new Vector3(data.pauseButtonWidth/2, data.pauseButtonHeight/2, 0);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            pauseButton.image.color = data.pauseButtonDefaultColor;
+            pauseButton.transform.localScale /= 2;
+            pauseButton.transform.position += new Vector3(data.pauseButtonWidth/2, data.pauseButtonHeight/2, 0);
+        }
+    }
+
+    private IEnumerator PausedButtonAlpha()
+    {
+        data.pauseButtonTargetAlpha = pauseButton.image.color.a;
+        for (;;)
+        {
+            if (data.pauseButtonTargetAlpha >= 1)
+            {
+                data.pauseButtonPulseDirection = -1;
+                data.pauseButtonTargetAlpha = 1;
+            }
+            else if (data.pauseButtonTargetAlpha <= data.pauseButtonDefaultColor.a)
+            {
+                data.pauseButtonPulseDirection = 1;
+                data.pauseButtonTargetAlpha = data.pauseButtonDefaultColor.a;
+            }
+            if (data.isPaused)
+            {
+                data.pauseButtonTargetAlpha += data.pauseButtonPulseDirection * (1 - data.pauseButtonDefaultColor.a) / data.pauseButtonPulseTime / data.targetFPS;
+                pauseButton.image.color = ChangeAlpha(pauseButton.image.color, data.pauseButtonTargetAlpha);
+            }
+            yield return new WaitForSecondsRealtime(1f / data.targetFPS);
+        }
     }
 
     void Start()
@@ -46,6 +74,8 @@ public class GameController : MonoBehaviour
         }
         waveDisplay.color = new Color(1, 1, 1, 0);
         StartCoroutine(WaveStarter());
+        pauseButton.image.color = data.pauseButtonDefaultColor;
+        StartCoroutine(PausedButtonAlpha());
     }
     public IEnumerator Death()
     {
@@ -126,7 +156,7 @@ public class GameController : MonoBehaviour
             float spawnY = Screen.height*(0.5f+data.entityBorder);
             BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), enemiesParent);
             spawnedEnemy.health = spawnedEnemy.CalculateHealth(wave);
-            spawnedEnemy.powerUpPercentChance = spawnedEnemy.health;
+            spawnedEnemy.powerUpPercentChance = spawnedEnemy.health * data.powerUpPercentChancePerHealth;
             spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(wave);
             spawnedEnemy.damage = spawnedEnemy.CalculateDamage(wave);
             spawnedEnemy.gameController = this;

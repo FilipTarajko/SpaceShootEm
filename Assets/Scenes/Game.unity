@@ -189,8 +189,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 2080374783
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.48235294}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -297,6 +297,7 @@ MonoBehaviour:
   waveDisplay: {fileID: 1806286323}
   redFlash: {fileID: 438645803}
   powerUp: {fileID: 1773693773264271164, guid: fb7d620d41ebb4e45bdd1223de10f3b2, type: 3}
+  pauseButton: {fileID: 1130467163}
 --- !u!4 &221143662
 Transform:
   m_ObjectHideFlags: 0
@@ -717,6 +718,16 @@ MonoBehaviour:
   waveDisplayStartFontSize: 200
   waveDisplayFontIncreaseStep: 0.5
   redFlashMaxAlpha: 0.3
+  pauseButtonDefaultColor: {r: 0.7372549, g: 0.7372549, b: 0.7372549, a: 0.46666667}
+  pauseButtonPausedColor: {r: 0.2173174, g: 0.6886792, b: 0.15917587, a: 1}
+  pauseButtonPulseTime: 1
+  pauseButtonPulseDirection: 0
+  pauseButtonTargetAlpha: 0
+  pauseButtonWidth: 123.4
+  pauseButtonHeight: 200
+  powerUpSpeed: 300
+  powerUpPercentChancePerHealth: 2
+  attackSpeedPerPowerUp: 1
 --- !u!4 &705962180
 Transform:
   m_ObjectHideFlags: 0
@@ -1207,7 +1218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.34117648}
+  m_Color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0.46666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
