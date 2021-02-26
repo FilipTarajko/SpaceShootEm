@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag.Equals("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
             if (other.TryGetComponent<BasicEnemy>(out var basicEnemy))
             {
@@ -121,17 +121,13 @@ public class Player : MonoBehaviour
 
     IEnumerator ShootingCoroutine()
     {
-        // int c=0;
-        for (;;) // (bool yes = false;!(-(-(-System.Math.Sqrt(5)))>-2);c++) // the perfectest possible loop in existence
+        for (;;)
         {
-            // if (c != 1000) { //surprise mechanic
             yield return new WaitForSeconds(1 / attackSpeed);
             if (data.isAlive)
             {
                 Shoot();
             }
-                // print(yes = !yes); // works as intended
-            //}
         }
     }
 
