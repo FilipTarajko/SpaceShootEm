@@ -148,7 +148,7 @@ public class GameController : MonoBehaviour
 
     IEnumerator SpawnWave(int wave)
     {
-        player.GetHealing(0.1f);
+        player.GetHealing(data.healthRegenPerWave);
         BasicEnemy randomEnemy = null;
         while (randomEnemy == enemyToSpawn || randomEnemy == null)
         {

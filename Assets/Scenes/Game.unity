@@ -710,6 +710,7 @@ MonoBehaviour:
   maxHealth: 3
   health: 3
   attackSpeed: 3
+  healthRegenPerWave: 0.5
   vibrationDuration: 50
   waveDisplayAppearingTime: 0.3
   waveDisplayDisappearingTime: 0.3

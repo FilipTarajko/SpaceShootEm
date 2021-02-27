@@ -23,6 +23,7 @@ public class Data : MonoBehaviour
     public float maxHealth;
     public float health;
     public float attackSpeed;
+    public float healthRegenPerWave;
     [Header("ui/player feedback settings")]
     public long vibrationDuration;
     public float waveDisplayAppearingTime;
