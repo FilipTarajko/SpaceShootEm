@@ -726,7 +726,7 @@ MonoBehaviour:
   pauseButtonWidth: 123.4
   pauseButtonHeight: 200
   powerUpSpeed: 300
-  powerUpPercentChancePerHealth: 2
+  powerUpPercentChancePerHealth: 1
   attackSpeedPerPowerUp: 1
 --- !u!4 &705962180
 Transform:

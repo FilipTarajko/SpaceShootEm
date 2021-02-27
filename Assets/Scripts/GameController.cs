@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     public RedFlash redFlash;
     public PowerUp powerUp;
     public Button pauseButton;
+    private BasicEnemy enemyToSpawn;
 
     List<BasicEnemy> enemiesList = new List<BasicEnemy>();
 
@@ -147,7 +148,13 @@ public class GameController : MonoBehaviour
     IEnumerator SpawnWave(int wave)
     {
         player.GetHealing(0.1f);
-        BasicEnemy enemyToSpawn = enemiesList[Random.Range(0, enemiesList.Count)];
+        BasicEnemy randomEnemy = null;
+        while (randomEnemy == enemyToSpawn || randomEnemy == null)
+        {
+            randomEnemy = enemiesList[Random.Range(0, enemiesList.Count)];
+            print($"Chosen: {randomEnemy}");
+        }
+        enemyToSpawn = randomEnemy;
         int enemiesToSpawn = enemyToSpawn.CalculateEnemiesToSpawn(wave);
         for (int i = 0; i < enemiesToSpawn; i++)
         {
