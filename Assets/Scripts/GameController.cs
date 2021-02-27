@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public Player player;
     public BasicEnemy meteorite;
     public BasicEnemy shootingEnemy;
+    public BasicEnemy enemyJet;
     public GameObject dynamic;
     public Transform enemiesParent;
     public Transform powerUpsParent;
@@ -68,7 +69,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        BasicEnemy[] enemies = { meteorite, shootingEnemy };
+        BasicEnemy[] enemies = { meteorite, shootingEnemy, enemyJet };
         for (int i = 0; i < enemies.Length; i++)
         {
             enemiesList.Add(enemies[i]);
@@ -152,7 +153,6 @@ public class GameController : MonoBehaviour
         while (randomEnemy == enemyToSpawn || randomEnemy == null)
         {
             randomEnemy = enemiesList[Random.Range(0, enemiesList.Count)];
-            print($"Chosen: {randomEnemy}");
         }
         enemyToSpawn = randomEnemy;
         int enemiesToSpawn = enemyToSpawn.CalculateEnemiesToSpawn(wave);
