@@ -700,7 +700,7 @@ MonoBehaviour:
   gameController: {fileID: 221143661}
   isAlive: 0
   isPaused: 0
-  entityBorder: 0.1
+  entityBorder: 0.05
   toplimit: 0.96
   sidelimit: 0.9
   bottomlimit: 0.93
