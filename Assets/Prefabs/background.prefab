@@ -95,7 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f9efcc17b398c4ea810912c10a0e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   parent: {fileID: 0}
   backgroundPrefab: {fileID: 721203742110986091}
   isParent: 0
-  speed: 10000
+  speed: 20

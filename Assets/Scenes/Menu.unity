@@ -2071,7 +2071,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 721203742110986091, guid: 496752c3544ae214ab08662406176da6, type: 3}
       propertyPath: speed
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 721203742110986091, guid: 496752c3544ae214ab08662406176da6, type: 3}
       propertyPath: canvas
