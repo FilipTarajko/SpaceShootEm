@@ -12,9 +12,11 @@ public class GameController : MonoBehaviour
     public BasicEnemy meteorite;
     public BasicEnemy shootingEnemy;
     public BasicEnemy enemyJet;
+    public EnemyBullet enemyBullet;
     public GameObject dynamic;
     public Transform enemiesParent;
     public Transform powerUpsParent;
+    public Transform enemyBulletParent;
     public int wave;
     public TMP_Text waveDisplay;
     public RedFlash redFlash;

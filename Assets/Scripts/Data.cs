@@ -11,6 +11,7 @@ public class Data : MonoBehaviour
     [Header("game state")]
     public bool isAlive;
     public bool isPaused;
+    public bool clickedPositionExists;
     [Header("movement settings")]
     public float entityBorder;
     public float toplimit;

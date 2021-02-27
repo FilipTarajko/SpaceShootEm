@@ -7,9 +7,14 @@ public class EnemyJet : BasicEnemy
     [SerializeField] float volleySize;
     [SerializeField] float volleyTime;
     [SerializeField] float bulletTime;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] float bulletDamage;
+    [SerializeField] float bulletSpread;
+    private EnemyBullet bulletToSpawn;
 
     private void Start()
     {
+        bulletToSpawn = gameController.enemyBullet;
         StartCoroutine(VolleySpawning());
     }
 
@@ -54,13 +59,12 @@ public class EnemyJet : BasicEnemy
         {
             if (!data.isPaused)
             {
-                BasicEnemy enemyToSpawn = gameController.meteorite; //make a bullet prefab
-                BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, transform.position, Quaternion.Euler(0, 0, 0), gameController.enemiesParent);
-                spawnedEnemy.health = spawnedEnemy.CalculateHealth(gameController.wave);
-                spawnedEnemy.speed = spawnedEnemy.CalculateSpeed(gameController.wave) / 3;
-                spawnedEnemy.damage = spawnedEnemy.CalculateDamage(gameController.wave);
-                spawnedEnemy.gameController = gameController;
-                spawnedEnemy.data = data;
+                EnemyBullet spawnedBullet = Instantiate(bulletToSpawn, transform.position, Quaternion.Euler(0, 0, 0), gameController.enemyBulletParent);
+                spawnedBullet.speed = bulletSpeed;
+                spawnedBullet.damage = bulletDamage;
+                spawnedBullet.spread = bulletSpread;
+                spawnedBullet.gameController = gameController;
+                spawnedBullet.data = data;
                 yield return new WaitForSeconds(bulletTime);
             }
         }

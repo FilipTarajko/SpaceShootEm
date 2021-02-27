@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 
     private void MoveToLastPressedPosition()
     {
-        if (data.isAlive)
+        if (data.isAlive && data.clickedPositionExists)
         {
             Vector3 targetPos = clickedPosition;
             targetPos.z = 0;
@@ -102,9 +102,16 @@ public class Player : MonoBehaviour
                 powerUp.Collect();
             }
         }
+        if (other.CompareTag("EnemyBullet"))
+        {
+            if (other.TryGetComponent<EnemyBullet>(out var enemyBullet))
+            {
+                enemyBullet.Hit(this);
+            }
+        }
     }
 
-    private void TakeDamage(float enemyDamage)
+    public void TakeDamage(float enemyDamage)
     {
         data.health -= enemyDamage;
         if (data.boolSettings["RedFlash"])
@@ -169,6 +176,7 @@ public class Player : MonoBehaviour
     void MouseFollowMovement(PointerEventData eventData)
     {
         clickedPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        data.clickedPositionExists = true;
     }
 
     void StartOffsetMovement(PointerEventData eventData)
