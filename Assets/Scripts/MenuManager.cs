@@ -29,6 +29,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] int clicksToReset;
     private string initialResetButtonText;
     private float initialResetButtonFontSize;
+    [SerializeField] RectTransform UiContainer;
 
     public void ChangeMenu(GameObject targetMenu)
     {
@@ -44,6 +45,7 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        //UiContainer.sizeDelta = new Vector2(Screen.height,Screen.height / 2 * (9f / 20f));
         initialResetButtonText = resetButtonText.text;
         initialResetButtonFontSize = resetButtonText.fontSize;
         mainMenu.SetActive(true);
