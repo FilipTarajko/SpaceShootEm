@@ -10,6 +10,8 @@ public class PowerUp : MonoBehaviour
 
     void Start()
     {
+        speed *= data.scaling;
+        transform.localScale *= data.scaling;
     }
 
     private void Movement()

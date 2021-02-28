@@ -445,7 +445,7 @@ Transform:
   m_LocalScale: {x: 10000, y: 10000, z: 1}
   m_Children: []
   m_Father: {fileID: 1120380800}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &438645802
 SpriteRenderer:
@@ -716,10 +716,14 @@ MonoBehaviour:
   isAlive: 0
   isPaused: 0
   clickedPositionExists: 0
+  usePercentLimits: 1
   entityBorder: 0.05
   toplimit: 0.96
   sidelimit: 0.9
   bottomlimit: 0.93
+  toppxlimit: 1150
+  sidepxlimit: 480
+  bottompxlimit: 1130
   followMovementPerSec: 5000
   damage: 1
   bulletSpeed: 1500
@@ -746,6 +750,7 @@ MonoBehaviour:
   powerUpSpeed: 300
   powerUpPercentChancePerHealth: 1
   attackSpeedPerPowerUp: 1
+  scaling: 0
 --- !u!4 &705962180
 Transform:
   m_ObjectHideFlags: 0
@@ -1123,8 +1128,8 @@ Transform:
   - {fileID: 1053271263}
   - {fileID: 1933994076}
   - {fileID: 895001456}
-  - {fileID: 2063780619}
   - {fileID: 438645801}
+  - {fileID: 2063780619}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1957,7 +1962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 721203742110986091, guid: 496752c3544ae214ab08662406176da6, type: 3}
       propertyPath: speed
-      value: 20
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 721203742110986091, guid: 496752c3544ae214ab08662406176da6, type: 3}
       propertyPath: canvas
@@ -1981,7 +1986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7909096350021014384, guid: 496752c3544ae214ab08662406176da6, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7909096350021014384, guid: 496752c3544ae214ab08662406176da6, type: 3}
       propertyPath: m_LocalPosition.x

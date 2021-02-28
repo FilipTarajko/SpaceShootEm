@@ -12,7 +12,7 @@ public class EnemyJet : BasicEnemy
     [SerializeField] float bulletSpread;
     private EnemyBullet bulletToSpawn;
 
-    private void Start()
+    public override void OnStart()
     {
         bulletToSpawn = gameController.enemyBullet;
         StartCoroutine(VolleySpawning());
@@ -20,7 +20,7 @@ public class EnemyJet : BasicEnemy
 
     public override void Frame()
     {
-        transform.Translate(new Vector3(0, -1, 0) * speed * Time.deltaTime);
+        transform.Translate(new Vector3(0, -1, 0) * speed * Time.deltaTime *data.scaling);
     }
     public override float CalculateHealth(int wave)
     {

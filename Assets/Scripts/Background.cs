@@ -12,10 +12,12 @@ public class Background : MonoBehaviour
 
     private void Start()
     {
+        transform.localScale *= data.scaling;
         if (isParent == true)
         {
+            speed *= data.scaling;
             Background secondOne = Instantiate(backgroundPrefab, parent.transform);
-            secondOne.transform.Translate(new Vector3(0, Screen.height, 0));
+            secondOne.transform.Translate(new Vector3(0, 2400*data.scaling, 0));
             secondOne.speed = speed;
             secondOne.data = data;
         }
@@ -36,9 +38,9 @@ public class Background : MonoBehaviour
     private void BackgroundMovement()
     {
         transform.Translate(0, -speed * Time.deltaTime, 0);
-        if (transform.position.y <= -Screen.height)
+        if (transform.position.y <= -2400*data.scaling)
         {
-            transform.Translate(new Vector3(0, 2 * Screen.height, 0));
+            transform.Translate(new Vector3(0, 2 * 2400 *data.scaling, 0));
         }
     }
 }

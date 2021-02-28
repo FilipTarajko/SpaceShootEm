@@ -13,10 +13,14 @@ public class Data : MonoBehaviour
     public bool isPaused;
     public bool clickedPositionExists;
     [Header("movement settings")]
+    public bool usePercentLimits;
     public float entityBorder;
     public float toplimit;
     public float sidelimit;
     public float bottomlimit;
+    public float toppxlimit;
+    public float sidepxlimit;
+    public float bottompxlimit;
     public float followMovementPerSec;
     [Header("balance settings")]
     public float damage;
@@ -46,6 +50,8 @@ public class Data : MonoBehaviour
     public float powerUpSpeed;
     public float powerUpPercentChancePerHealth;
     public float attackSpeedPerPowerUp;
+    [Header("WIP")]
+    public float scaling;
 
     public Dictionary<string, float> floatSettings = new Dictionary<string, float>() { };
     public Dictionary<string, bool> boolSettings = new Dictionary<string, bool>() { };
@@ -54,12 +60,19 @@ public class Data : MonoBehaviour
 
     private void Awake()
     {
+        Scaling();
         toplimit *= Screen.height/2;
         bottomlimit *= Screen.height/2;
-        sidelimit *= Screen.width/2;
+        sidelimit *= Screen.height/2*(9f/20f);
         floatSettings.Add("Sensitivity", 1f);
         string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash" };
         AddBoolSettings(boolsettings);
+    }
+
+    private void Scaling()
+    {
+        scaling = Screen.height / 2400f;
+        bulletSpeed *= scaling;
     }
 
     private void AddBoolSettings(string [] boolsettings)

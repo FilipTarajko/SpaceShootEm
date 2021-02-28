@@ -9,7 +9,7 @@ public class Meteorite : BasicEnemy
     public float minAsteroidScale;
     public float maxAsteroidScale;
 
-    private void Start()
+    public override void OnStart()
     {
         float scale = Random.Range(minAsteroidScale, maxAsteroidScale);
         transform.localScale = new Vector3(scale, scale, 1f);
@@ -20,7 +20,7 @@ public class Meteorite : BasicEnemy
 
     public override void Frame()
     {
-        transform.Translate(movementVector * speed * Time.deltaTime);
+        transform.Translate(movementVector * speed * Time.deltaTime *data.scaling);
     }
 
     public override float CalculateHealth(int wave)

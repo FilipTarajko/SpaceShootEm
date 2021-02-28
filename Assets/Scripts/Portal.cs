@@ -12,7 +12,7 @@ public class Portal : BasicEnemy
     [SerializeField] float mistRotation;
     [SerializeField] float spawnTime;
 
-    private void Start()
+    public override void OnStart()
     {
         StartCoroutine(MeteoriteSpawning());
         mist.transform.Rotate(0, 0, Random.Range(0, 360));
@@ -20,7 +20,7 @@ public class Portal : BasicEnemy
 
     public override void Frame()
     {
-        transform.Translate(new Vector3(0,-1,0) * speed * Time.deltaTime);
+        transform.Translate(new Vector3(0,-1,0) * speed * Time.deltaTime *data.scaling);
         outer.transform.Rotate(0,0,outerRotation * Time.deltaTime);
         inner.transform.Rotate(0,0,innerRotation * Time.deltaTime);
         mist.transform.Rotate(0,0,mistRotation * Time.deltaTime);

@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
             inputLayer.OnPointerDownAction += MouseFollowMovement;
             inputLayer.OnDragAction += MouseFollowMovement;
         }
+        transform.localScale *= data.scaling;
     }
 
     private void Update()
@@ -58,7 +59,7 @@ public class Player : MonoBehaviour
         {
             Vector3 targetPos = clickedPosition;
             targetPos.z = 0;
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime*data.followMovementPerSec); 
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime*data.followMovementPerSec*data.scaling); 
         }
     }
 
@@ -166,10 +167,20 @@ public class Player : MonoBehaviour
     void CheckLimits(PointerEventData eventData)
     {
         Vector3 targetPosition = transform.position;
-        targetPosition.x = System.Math.Max(-data.sidelimit, targetPosition.x);
-        targetPosition.x = System.Math.Min(data.sidelimit, targetPosition.x);
-        targetPosition.y = System.Math.Min(data.toplimit, targetPosition.y);
-        targetPosition.y = System.Math.Max(-data.bottomlimit, targetPosition.y);
+        if (data.usePercentLimits)
+        {
+            targetPosition.x = System.Math.Max(-data.sidelimit, targetPosition.x);
+            targetPosition.x = System.Math.Min(data.sidelimit, targetPosition.x);
+            targetPosition.y = System.Math.Min(data.toplimit, targetPosition.y);
+            targetPosition.y = System.Math.Max(-data.bottomlimit, targetPosition.y);
+        }
+        else
+        {
+            targetPosition.x = System.Math.Max(-data.sidepxlimit, targetPosition.x);
+            targetPosition.x = System.Math.Min(data.sidepxlimit, targetPosition.x);
+            targetPosition.y = System.Math.Min(data.toppxlimit, targetPosition.y);
+            targetPosition.y = System.Math.Max(-data.bottompxlimit, targetPosition.y);
+        }
         transform.position = targetPosition;
     }
 

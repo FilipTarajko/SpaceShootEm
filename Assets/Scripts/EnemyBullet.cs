@@ -17,6 +17,8 @@ public class EnemyBullet : MonoBehaviour
         rotation = Quaternion.Euler(0, 0, Random.Range(-spread, +spread));
         targetVector = (gameController.player.transform.position - transform.position).normalized;
         targetVector = rotation * targetVector;
+        transform.localScale *= data.scaling;
+        speed *= data.scaling;
     }
 
     void Update()

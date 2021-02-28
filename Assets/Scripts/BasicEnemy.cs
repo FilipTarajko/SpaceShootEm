@@ -11,6 +11,12 @@ public abstract class BasicEnemy : MonoBehaviour
     public float damage;
     public float powerUpPercentChance;
 
+    private void Start()
+    {
+        OnStart();
+        transform.localScale *= data.scaling;
+    }
+    public abstract void OnStart();
     void Update()
     {
         if (transform.position.y > -(Screen.height*(0.5+data.entityBorder)) && health > 0)
