@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
     private Vector3 previousCursorPosition;
     private Vector3 cursorDelta;
     private Vector3 clickedPosition;
+    [SerializeField] AudioSource audioSourceShoot;
+    [SerializeField] AudioSource audioSourceHit;
+    [SerializeField] AudioSource audioSourceDestroyed;
+    [SerializeField] AudioSource audioSourceMusic;
 
     private void Start()
     {
@@ -34,6 +38,22 @@ public class Player : MonoBehaviour
             inputLayer.OnDragAction += MouseFollowMovement;
         }
         transform.localScale *= data.scaling;
+        if (data.boolSettings["PlayMusic"])
+        {
+            StartCoroutine(PlayMusicCoroutine());
+        }
+    }
+
+    private IEnumerator PlayMusicCoroutine()
+    {
+        for(;;)
+        {
+            if (data.boolSettings["PlayMusic"])
+            {
+                audioSourceMusic.Play();
+            }
+            yield return new WaitForSeconds(15f);
+        }
     }
 
     private void Update()
@@ -69,7 +89,11 @@ public class Player : MonoBehaviour
         data.isAlive = false;
         spriteRenderer.enabled = false;
         healthbar.gameObject.SetActive(false);
-        StartCoroutine(gameController.Death()); 
+        StartCoroutine(gameController.Death());
+        if (data.boolSettings["PlaySfx"])
+        {
+            audioSourceDestroyed.Play();
+        }
     }
 
     private void HandlePrefs()
@@ -124,6 +148,10 @@ public class Player : MonoBehaviour
             Vibration.Vibrate(data.vibrationDuration);
         }
         healthbar.SetHealth(data.health);
+        if (data.isAlive && data.boolSettings["PlaySfx"])
+        {
+            audioSourceHit.Play();
+        }
     }
 
     public void GetHealing(float healingAmount)
@@ -152,6 +180,10 @@ public class Player : MonoBehaviour
         //print("Shot shot");
         PlayerBullet spawnedBullet = Instantiate(bullet, this.transform);
         SetBulletVariables(spawnedBullet);
+        if (data.boolSettings["PlaySfx"])
+        {
+            audioSourceShoot.Play();
+        }
     }
 
     private void SetBulletVariables(PlayerBullet spawnedBullet)

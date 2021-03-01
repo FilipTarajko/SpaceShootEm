@@ -50,8 +50,10 @@ public class Data : MonoBehaviour
     public float powerUpSpeed;
     public float powerUpPercentChancePerHealth;
     public float attackSpeedPerPowerUp;
-    [Header("WIP")]
+    [Header("Scaling")]
     public float scaling;
+    [Header("sfx/music")]
+    public float musicLength;
 
     public Dictionary<string, float> floatSettings = new Dictionary<string, float>() { };
     public Dictionary<string, bool> boolSettings = new Dictionary<string, bool>() { };
@@ -65,7 +67,7 @@ public class Data : MonoBehaviour
         bottomlimit *= Screen.height/2;
         sidelimit *= Screen.height/2*(9f/20f);
         floatSettings.Add("Sensitivity", 1f);
-        string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash" };
+        string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash", "PlaySfx", "PlayMusic" };
         AddBoolSettings(boolsettings);
     }
 

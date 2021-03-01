@@ -25,6 +25,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Toggle vibrationToggle;
     [SerializeField] Toggle swipeMovementToggle;
     [SerializeField] Toggle redFlashToggle;
+    [SerializeField] Toggle playAudioToggle;
+    [SerializeField] Toggle playMusicToggle;
     [SerializeField] int resetButtonClicks;
     [SerializeField] int clicksToReset;
     private string initialResetButtonText;
@@ -63,6 +65,8 @@ public class MenuManager : MonoBehaviour
         HandleToggle(vibrationToggle, "Vibration");
         HandleToggle(swipeMovementToggle, "SwipeMovement");
         HandleToggle(redFlashToggle, "RedFlash");
+        HandleToggle(playAudioToggle, "PlaySfx");
+        HandleToggle(playMusicToggle, "PlayMusic");
     }
 
     private void HandleToggle(Toggle toggle, string key)
