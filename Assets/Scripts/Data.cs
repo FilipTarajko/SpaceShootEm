@@ -54,10 +54,6 @@ public class Data : MonoBehaviour
     public float scaling;
     [Header("sfx/music")]
     public float musicLength;
-    [Header("fires")]
-    public float fireMinYScale;
-    public float fireMaxYScale;
-    public float fireYScaleChangePerSec;
 
     public Dictionary<string, float> floatSettings = new Dictionary<string, float>() { };
     public Dictionary<string, bool> boolSettings = new Dictionary<string, bool>() { };

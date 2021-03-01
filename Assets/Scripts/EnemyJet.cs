@@ -11,13 +11,15 @@ public class EnemyJet : BasicEnemy
     [SerializeField] float bulletDamage;
     [SerializeField] float bulletSpread;
     private EnemyBullet bulletToSpawn;
-    [SerializeField] Fires fires;
+    [SerializeField] ParticleSystem particleSystemFire1;
+    [SerializeField] ParticleSystem particleSystemFire2;
 
     public override void OnStart()
     {
         bulletToSpawn = gameController.enemyBullet;
         StartCoroutine(VolleySpawning());
-        fires.data = data;
+        particleSystemFire1.Play();
+        particleSystemFire2.Play();
     }
 
     public override void Frame()

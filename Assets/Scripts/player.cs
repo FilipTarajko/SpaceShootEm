@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
     [SerializeField] AudioSource audioSourceHit;
     [SerializeField] AudioSource audioSourceDestroyed;
     [SerializeField] AudioSource audioSourceMusic;
+    [SerializeField] ParticleSystem particleSystemDestroyed;
+    [SerializeField] ParticleSystem particleSystemFire1;
+    [SerializeField] ParticleSystem particleSystemFire2;
 
     private void Start()
     {
@@ -42,6 +45,8 @@ public class Player : MonoBehaviour
         {
             audioSourceMusic.volume = 0;
         }
+        particleSystemFire1.Play();
+        particleSystemFire2.Play();
     }
 
     private void Update()
@@ -77,6 +82,7 @@ public class Player : MonoBehaviour
         data.isAlive = false;
         spriteParent.SetActive(false);
         healthbar.gameObject.SetActive(false);
+        particleSystemDestroyed.Play();
         StartCoroutine(gameController.Death());
         if (data.boolSettings["PlaySfx"])
         {
