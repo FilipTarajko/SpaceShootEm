@@ -32,6 +32,8 @@ public class MenuManager : MonoBehaviour
     private string initialResetButtonText;
     private float initialResetButtonFontSize;
     [SerializeField] RectTransform UiContainer;
+    [SerializeField] AudioSource audioSourceMenuMusic;
+    [SerializeField] float musicTime;
 
     public void ChangeMenu(GameObject targetMenu)
     {
@@ -67,6 +69,37 @@ public class MenuManager : MonoBehaviour
         HandleToggle(redFlashToggle, "RedFlash");
         HandleToggle(playAudioToggle, "PlaySfx");
         HandleToggle(playMusicToggle, "PlayMusic");
+        SetMusicVolume();
+        StartCoroutine(PlayMenuMusic());
+        playMusicToggle.onValueChanged.AddListener(delegate { SetMusicVolume(); });
+    }
+
+    private void SetMusicVolume()
+    {
+        if (PlayerPrefs.HasKey("PlayMusic"))
+        {
+            if (Methods.IntToBool(PlayerPrefs.GetInt("PlayMusic")))
+            {
+                audioSourceMenuMusic.volume = 0.07f;
+            }
+            else
+            {
+                audioSourceMenuMusic.volume = 0;
+            }
+        }
+        else
+        {
+            audioSourceMenuMusic.volume = 0.07f;
+        }
+    }
+
+    private IEnumerator PlayMenuMusic()
+    {
+        for(;;)
+        {
+            audioSourceMenuMusic.Play();
+            yield return new WaitForSeconds(musicTime);
+        }
     }
 
     private void HandleToggle(Toggle toggle, string key)
