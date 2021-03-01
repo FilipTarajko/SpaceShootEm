@@ -78,6 +78,8 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
+        particleSystemFire1.gameObject.transform.Translate(new Vector3(0, 0, 100)); //ITS UGLY
+        particleSystemFire2.gameObject.transform.Translate(new Vector3(0, 0, 100));
         HandlePrefs();
         data.isAlive = false;
         spriteParent.SetActive(false);
