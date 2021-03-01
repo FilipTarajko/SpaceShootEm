@@ -40,6 +40,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] RectTransform UiContainer;
     [SerializeField] AudioSource audioSourceMenuMusic;
     [SerializeField] float musicTime;
+    [SerializeField] float musicVolume;
 
     public void ChangeMenu(GameObject targetMenu)
     {
@@ -56,6 +57,7 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        audioSourceMenuMusic = MusicAudioSource.Instance.gameObject.GetComponent<AudioSource>(); ;
         //UiContainer.sizeDelta = new Vector2(Screen.height,Screen.height / 2 * (9f / 20f));
         initialResetButtonText = resetButtonText.text;
         initialResetButtonFontSize = resetButtonText.fontSize;
@@ -89,7 +91,7 @@ public class MenuManager : MonoBehaviour
         {
             if (Methods.IntToBool(PlayerPrefs.GetInt("PlayMusic")))
             {
-                audioSourceMenuMusic.volume = 0.07f;
+                audioSourceMenuMusic.volume = musicVolume;
             }
             else
             {
@@ -98,7 +100,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            audioSourceMenuMusic.volume = 0.07f;
+            audioSourceMenuMusic.volume = musicVolume;
         }
     }
 
@@ -106,7 +108,10 @@ public class MenuManager : MonoBehaviour
     {
         for(;;)
         {
-            audioSourceMenuMusic.Play();
+            if (!audioSourceMenuMusic.isPlaying)
+            {
+                audioSourceMenuMusic.Play();
+            }
             yield return new WaitForSeconds(musicTime);
         }
     }

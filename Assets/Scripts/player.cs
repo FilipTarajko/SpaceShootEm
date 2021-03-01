@@ -38,21 +38,9 @@ public class Player : MonoBehaviour
             inputLayer.OnDragAction += MouseFollowMovement;
         }
         transform.localScale *= data.scaling;
-        if (data.boolSettings["PlayMusic"])
+        if (!data.boolSettings["PlayMusic"])
         {
-            StartCoroutine(PlayMusicCoroutine());
-        }
-    }
-
-    private IEnumerator PlayMusicCoroutine()
-    {
-        for(;;)
-        {
-            if (data.boolSettings["PlayMusic"])
-            {
-                audioSourceMusic.Play();
-            }
-            yield return new WaitForSeconds(15f);
+            audioSourceMusic.volume = 0;
         }
     }
 
