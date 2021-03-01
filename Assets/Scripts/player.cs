@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] Data data;
     [SerializeField] PlayerBullet bullet;
     [SerializeField] GameObject playerBulletParent;
-    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] GameObject spriteParent;
     [SerializeField] Healthbar healthbar;
     private Vector3 previousCursorPosition;
     private Vector3 cursorDelta;
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
     {
         HandlePrefs();
         data.isAlive = false;
-        spriteRenderer.enabled = false;
+        spriteParent.SetActive(false);
         healthbar.gameObject.SetActive(false);
         StartCoroutine(gameController.Death());
         if (data.boolSettings["PlaySfx"])

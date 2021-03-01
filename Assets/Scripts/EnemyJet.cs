@@ -11,11 +11,13 @@ public class EnemyJet : BasicEnemy
     [SerializeField] float bulletDamage;
     [SerializeField] float bulletSpread;
     private EnemyBullet bulletToSpawn;
+    [SerializeField] Fires fires;
 
     public override void OnStart()
     {
         bulletToSpawn = gameController.enemyBullet;
         StartCoroutine(VolleySpawning());
+        fires.data = data;
     }
 
     public override void Frame()
