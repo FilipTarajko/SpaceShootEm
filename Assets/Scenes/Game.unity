@@ -745,7 +745,7 @@ MonoBehaviour:
   isPaused: 0
   clickedPositionExists: 0
   usePercentLimits: 1
-  entityBorder: 0.05
+  entityBorder: 0.1
   toplimit: 0.96
   sidelimit: 0.9
   bottomlimit: 0.93

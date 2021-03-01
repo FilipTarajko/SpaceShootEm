@@ -19,12 +19,16 @@ public abstract class BasicEnemy : MonoBehaviour
     public abstract void OnStart();
     void Update()
     {
-        if (transform.position.y > -(Screen.height*(0.5+data.entityBorder)) && health > 0)
+        if ((!data.CheckIfOut(transform)) && health > 0)
         {
             if (!data.isPaused)
             {
                 Frame();
             }
+        }
+        else if(health > 0) //separate death from going off-screen and being removed
+        {
+            Destroy(gameObject);
         }
         else
         {
@@ -42,7 +46,7 @@ public abstract class BasicEnemy : MonoBehaviour
             spawnedEnemy.gameController = gameController;
             spawnedEnemy.data = data;
         }
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     public void DealDamage(float dealtDamage)

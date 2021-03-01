@@ -25,13 +25,13 @@ public class EnemyBullet : MonoBehaviour
     {
         if (!data.isPaused)
         {
-            if (transform.position.y < Screen.height * (0.5 + data.entityBorder))
+            if (data.CheckIfOut(transform))
             {
-                transform.Translate(targetVector * speed * Time.deltaTime);
+                Destroy(this.gameObject);
             }
             else
             {
-                Destroy(this.gameObject);
+                transform.Translate(targetVector * speed * Time.deltaTime);
             }
         }
     }

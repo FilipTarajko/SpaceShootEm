@@ -13,6 +13,20 @@ public class PowerUp : MonoBehaviour
         speed *= data.scaling;
         transform.localScale *= data.scaling;
     }
+    void Update()
+    {
+        if (!data.CheckIfOut(transform))
+        {
+            if (!data.isPaused)
+            {
+                Movement();
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Movement()
     {
@@ -23,14 +37,5 @@ public class PowerUp : MonoBehaviour
     {
         data.attackSpeed += data.attackSpeedPerPowerUp;
         Destroy(this.gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!data.isPaused)
-        {
-            Movement();
-        }
     }
 }

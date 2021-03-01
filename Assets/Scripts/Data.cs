@@ -71,6 +71,18 @@ public class Data : MonoBehaviour
         AddBoolSettings(boolsettings);
     }
 
+    public bool CheckIfOut(Transform transform)
+    {
+        if(transform.position.y > -Screen.height * (0.5 + entityBorder) && transform.position.y < Screen.height * (0.5 + entityBorder) && transform.position.x > -Screen.height * 9f/20f * (0.5 + entityBorder) && transform.position.x < Screen.height * 9f / 20f * (0.5 + entityBorder))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     private void Scaling()
     {
         scaling = Screen.height / 2400f;

@@ -13,13 +13,13 @@ public class PlayerBullet : MonoBehaviour
     {
         if (!data.isPaused)
         {
-            if (transform.position.y < Screen.height * (0.5 + data.entityBorder))
+            if (!data.CheckIfOut(transform))
             {
                 transform.Translate(new Vector3(0, speed * Time.deltaTime, 0));
             }
             else
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class Methods
 {
+
     public static void BgScale(Transform transform)
     {
         transform.localScale *= Screen.height / 2400f;
