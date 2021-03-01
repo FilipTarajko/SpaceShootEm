@@ -7,12 +7,14 @@ public class Background : MonoBehaviour
     [SerializeField] Data data;
     [SerializeField] GameObject parent;
     [SerializeField] Background backgroundPrefab;
+    private float minY;
+    private float addedY;
     public bool isParent = false;
     public float speed;
 
     private void Start()
     {
-        transform.localScale *= Screen.height / 2400f;
+        Methods.BgScale(transform);
         if (isParent == true)
         {
             speed *= Screen.height / 2400f;
@@ -21,6 +23,8 @@ public class Background : MonoBehaviour
             secondOne.speed = speed;
             secondOne.data = data;
         }
+        minY = -Screen.height;
+        addedY = 2 * Screen.height;
     }
 
     private void Update()
@@ -38,9 +42,9 @@ public class Background : MonoBehaviour
     private void BackgroundMovement()
     {
         transform.Translate(0, -speed * Time.deltaTime, 0);
-        if (transform.position.y <= -2400* Screen.height / 2400f)
+        if (transform.position.y <= minY)
         {
-            transform.Translate(new Vector3(0, 2 * 2400 * Screen.height / 2400f, 0));
+            transform.Translate(new Vector3(0, addedY, 0));
         }
     }
 }
