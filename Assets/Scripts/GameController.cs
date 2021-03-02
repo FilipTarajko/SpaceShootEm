@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour
     public RedFlash redFlash;
     public PowerUp powerUp;
     public Button pauseButton;
+    public EnemyDestroyedParticleParent enemyDestroyedParticleParent;
+    public Transform enemyParticlesParent;
     private BasicEnemy enemyToSpawn;
 
     List<BasicEnemy> enemiesList = new List<BasicEnemy>();

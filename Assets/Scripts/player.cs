@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem particleSystemDestroyed;
     [SerializeField] ParticleSystem particleSystemFire1;
     [SerializeField] ParticleSystem particleSystemFire2;
+    [SerializeField] GameObject particleSystemDestroyedParent;
+    [SerializeField] Vector3 particleSystemDestroyedParentSpeed;
 
     private void Start()
     {
@@ -67,6 +69,10 @@ public class Player : MonoBehaviour
             {
                 MoveToLastPressedPosition();
             }
+            if (!data.isAlive)
+            {
+                particleSystemDestroyedParent.transform.Translate(particleSystemDestroyedParentSpeed * Time.deltaTime *144f/5);
+            }
         }
     }
 
@@ -89,7 +95,8 @@ public class Player : MonoBehaviour
         data.isAlive = false;
         spriteParent.SetActive(false);
         healthbar.gameObject.SetActive(false);
-        print(transform.position - data.previousPositions[5]);
+        particleSystemDestroyedParentSpeed = (transform.position - data.previousPositions[5]);
+
         particleSystemDestroyed.Play();
         StartCoroutine(gameController.Death());
         if (data.boolSettings["PlaySfx"])
@@ -119,7 +126,7 @@ public class Player : MonoBehaviour
             if (other.TryGetComponent<BasicEnemy>(out var basicEnemy))
             {
                 TakeDamage(basicEnemy.damage);
-                Destroy(other.gameObject);
+                basicEnemy.DealDamage(10);
             }
         }
         if (other.CompareTag("PowerUp"))
@@ -233,6 +240,9 @@ public class Player : MonoBehaviour
     {
         cursorDelta = previousCursorPosition - Camera.main.ScreenToWorldPoint(eventData.position);
         previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-        transform.Translate(-cursorDelta * data.floatSettings["Sensitivity"]);
+        if (data.isAlive)
+        {
+            transform.Translate(-cursorDelta * data.floatSettings["Sensitivity"]);
+        }
     }
 }

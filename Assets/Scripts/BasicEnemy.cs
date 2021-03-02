@@ -10,6 +10,8 @@ public abstract class BasicEnemy : MonoBehaviour
     public float speed;
     public float damage;
     public float powerUpPercentChance;
+    public Vector3 movementVector = Vector3.down;
+    public Color ColorForParticles;
 
     private void Start()
     {
@@ -26,7 +28,7 @@ public abstract class BasicEnemy : MonoBehaviour
                 Frame();
             }
         }
-        else if(health > 0) //separate death from going off-screen and being removed
+        else if(health > 0)
         {
             Destroy(gameObject);
         }
@@ -46,6 +48,15 @@ public abstract class BasicEnemy : MonoBehaviour
             spawnedEnemy.gameController = gameController;
             spawnedEnemy.data = data;
         }
+        //BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), enemiesParent);
+        EnemyDestroyedParticleParent enemyDestroyedParticleParent = Instantiate(gameController.enemyDestroyedParticleParent, transform.position, Quaternion.Euler(0, 0, 0), gameController.enemyParticlesParent);
+        enemyDestroyedParticleParent.ColorForParticles = ColorForParticles;
+        enemyDestroyedParticleParent.data = data;
+        if (movementVector != null)
+        {
+            enemyDestroyedParticleParent.movementVector = movementVector;
+        }
+        enemyDestroyedParticleParent.speed = speed;
         Destroy(gameObject);
     }
 

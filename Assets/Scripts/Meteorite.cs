@@ -5,7 +5,6 @@ using UnityEngine;
 public class Meteorite : BasicEnemy
 {
     public float angle;
-    public Vector3 movementVector;
     public float minAsteroidScale;
     public float maxAsteroidScale;
 

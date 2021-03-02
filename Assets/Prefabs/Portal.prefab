@@ -333,6 +333,8 @@ MonoBehaviour:
   speed: 0
   damage: 0
   powerUpPercentChance: 0
+  movementVector: {x: 0, y: -1, z: 0}
+  ColorForParticles: {r: 0, g: 0.9882353, b: 0.6901961, a: 1}
   outer: {fileID: 2478180253872785953}
   inner: {fileID: 4519461069351174483}
   mist: {fileID: 3077906402824944559}
