@@ -11,7 +11,8 @@ public abstract class BasicEnemy : MonoBehaviour
     public float damage;
     public float powerUpPercentChance;
     public Vector3 movementVector = Vector3.down;
-    public Color ColorForParticles;
+    public Color ColorForParticles1;
+    public Color ColorForParticles2;
 
     private void Start()
     {
@@ -50,7 +51,8 @@ public abstract class BasicEnemy : MonoBehaviour
         }
         //BasicEnemy spawnedEnemy = Instantiate(enemyToSpawn, new Vector3(spawnX,spawnY,0), Quaternion.Euler(0,0,0), enemiesParent);
         EnemyDestroyedParticleParent enemyDestroyedParticleParent = Instantiate(gameController.enemyDestroyedParticleParent, transform.position, Quaternion.Euler(0, 0, 0), gameController.enemyParticlesParent);
-        enemyDestroyedParticleParent.ColorForParticles = ColorForParticles;
+        enemyDestroyedParticleParent.ColorForParticles1 = ColorForParticles1;
+        enemyDestroyedParticleParent.ColorForParticles2 = ColorForParticles2;
         enemyDestroyedParticleParent.data = data;
         if (movementVector != null)
         {

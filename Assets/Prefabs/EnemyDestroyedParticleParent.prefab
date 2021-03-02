@@ -226,8 +226,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
-      minColor: {r: 1, g: 1, b: 1, a: 1}
+      minMaxState: 2
+      minColor: {r: 0, g: 0, b: 0, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
@@ -4883,5 +4883,6 @@ MonoBehaviour:
   speed: 0
   movementVector: {x: 0, y: 0, z: 0}
   data: {fileID: 0}
-  ColorForParticles: {r: 0, g: 0, b: 0, a: 0}
+  ColorForParticles1: {r: 0, g: 0, b: 0, a: 0}
+  ColorForParticles2: {r: 0, g: 0, b: 0, a: 0}
   particleSystemDestroyed: {fileID: 5764296225557519816}

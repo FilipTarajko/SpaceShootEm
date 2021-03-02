@@ -198,7 +198,8 @@ MonoBehaviour:
   damage: 0
   powerUpPercentChance: 0
   movementVector: {x: 0, y: -1, z: 0}
-  ColorForParticles: {r: 0.69803923, g: 0, b: 1, a: 1}
+  ColorForParticles1: {r: 0.69803923, g: 0, b: 1, a: 1}
+  ColorForParticles2: {r: 0.23529413, g: 0.09019608, b: 0.29411766, a: 1}
   volleySize: 6
   volleyTime: 2
   bulletTime: 0.15

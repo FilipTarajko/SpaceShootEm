@@ -124,7 +124,8 @@ MonoBehaviour:
   damage: 0
   powerUpPercentChance: 0
   movementVector: {x: 0, y: 0, z: 0}
-  ColorForParticles: {r: 1, g: 0.2750727, b: 0, a: 1}
+  ColorForParticles1: {r: 1, g: 0.55372715, b: 0, a: 1}
+  ColorForParticles2: {r: 0.3018868, g: 0, b: 0, a: 1}
   angle: 30
   minAsteroidScale: 0.5
   maxAsteroidScale: 1.5
