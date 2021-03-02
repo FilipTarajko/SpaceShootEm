@@ -238,11 +238,14 @@ public class Player : MonoBehaviour
 
     void DoOffsetMovement(PointerEventData eventData)
     {
+        if (!data.isPaused)
+        {
         cursorDelta = previousCursorPosition - Camera.main.ScreenToWorldPoint(eventData.position);
         previousCursorPosition = Camera.main.ScreenToWorldPoint(eventData.position);
         if (data.isAlive)
         {
             transform.Translate(-cursorDelta * data.floatSettings["Sensitivity"]);
+        }
         }
     }
 }
