@@ -903,6 +903,13 @@ MonoBehaviour:
   attackSpeedPerPowerUp: 1
   scaling: 0
   musicLength: 0
+  previousPositions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!4 &705962180
 Transform:
   m_ObjectHideFlags: 0
@@ -2357,9 +2364,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 5
+      minMaxState: 3
+      scalar: 750
+      minScalar: 250
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2993,7 +3000,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
     arc:
-      value: 135
+      value: 360
       mode: 0
       spread: 0
       speed:
@@ -3732,12 +3739,12 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 300
-      minScalar: -300
+      minMaxState: 0
+      scalar: 500
+      minScalar: -500
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3788,9 +3795,9 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: -250
-      minScalar: 1000
+      minMaxState: 0
+      scalar: 500
+      minScalar: 500
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3841,8 +3848,8 @@ ParticleSystem:
         m_RotationOrder: 4
     z:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 0
+      minMaxState: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2

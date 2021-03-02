@@ -60,6 +60,8 @@ public class Data : MonoBehaviour
     List<string> floatList = new List<string>();
     List<string> boolList = new List<string>();
 
+    public Vector3[] previousPositions = new Vector3[6]; 
+
     private void Awake()
     {
         Scaling();

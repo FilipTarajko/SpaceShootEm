@@ -54,6 +54,11 @@ public class Player : MonoBehaviour
         if (!data.isPaused)
         {
             CheckLimits(null);
+            for (int i = data.previousPositions.Length - 1; i > 0; i--)
+            {
+                data.previousPositions[i] = data.previousPositions[i - 1];
+            }
+            data.previousPositions[0] = transform.position;
             if (data.health <= 0 && data.isAlive)
             {
                 Die();
@@ -78,12 +83,13 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        particleSystemFire1.gameObject.transform.Translate(new Vector3(0, 0, 100)); //ITS UGLY
-        particleSystemFire2.gameObject.transform.Translate(new Vector3(0, 0, 100));
+        particleSystemFire1.gameObject.SetActive(false);
+        particleSystemFire2.gameObject.SetActive(false);
         HandlePrefs();
         data.isAlive = false;
         spriteParent.SetActive(false);
         healthbar.gameObject.SetActive(false);
+        print(transform.position - data.previousPositions[5]);
         particleSystemDestroyed.Play();
         StartCoroutine(gameController.Death());
         if (data.boolSettings["PlaySfx"])
