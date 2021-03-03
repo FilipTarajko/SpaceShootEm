@@ -59,6 +59,8 @@ public class Player : MonoBehaviour
         if (Methods.IntToBool(PlayerPrefs.GetInt("CustomPlayerColor")))
         {
             shipSprite.color = new Color(PlayerPrefs.GetFloat("Red"), PlayerPrefs.GetFloat("Green"), PlayerPrefs.GetFloat("Blue"));
+            var main = particleSystemDestroyed.main;
+            main.startColor = shipSprite.color;
         }
     }
 

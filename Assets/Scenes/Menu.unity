@@ -426,7 +426,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: -17}
+  m_SizeDelta: {x: 30, y: -17}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &246598300
 MonoBehaviour:
@@ -450,8 +450,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1027,7 +1027,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 50
+  m_ScrollSensitivity: 100
   m_Viewport: {fileID: 1930279388}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 246598300}
@@ -3269,17 +3269,8 @@ MonoBehaviour:
   authorTextShadow: {fileID: 1468752822}
   titleTextShadow: {fileID: 1451029236}
   colorChangeSpeed: 0.3
-  sensitivitySlider: {fileID: 0}
-  sensitivityParent: {fileID: 0}
-  sensitivityText: {fileID: 0}
   sensitivitySliderDefaultValue: 1
-  sfxSlider: {fileID: 0}
-  sfxParent: {fileID: 0}
-  sfxText: {fileID: 0}
   sfxSliderDefaultValue: 0.5
-  musicSlider: {fileID: 0}
-  musicParent: {fileID: 0}
-  musicText: {fileID: 0}
   musicSliderDefaultValue: 0.5
   mainMenu: {fileID: 2007357116}
   settingsMenu: {fileID: 1445902246}

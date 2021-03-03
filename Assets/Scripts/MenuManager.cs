@@ -84,6 +84,7 @@ public void ChangeMenu(GameObject targetMenu)
                 if(entry.Value.conditionKey == boolsettings[i])
                 {
                     GenerateSettingSlider(entry.Key);
+                    toggles[boolsettings[i]].toggle.onValueChanged.AddListener(delegate { SetSliderVisibility(entry.Key); });
                 }
             }
         }
@@ -128,9 +129,6 @@ public void ChangeMenu(GameObject targetMenu)
         HandleText(highScore, "Highscore");
         SetMusicVolume();
         toggles["PlayMusic"].toggle.onValueChanged.AddListener(delegate { SetMusicVolume(); });
-        toggles["SwipeMovement"].toggle.onValueChanged.AddListener(delegate { SetSliderVisibility("Sensitivity"); });
-        toggles["PlaySfx"].toggle.onValueChanged.AddListener(delegate { SetSliderVisibility("SfxVolume"); });
-        toggles["PlayMusic"].toggle.onValueChanged.AddListener(delegate { SetSliderVisibility("MusicVolume"); });
     }
 
     public void SetMusicVolume()
