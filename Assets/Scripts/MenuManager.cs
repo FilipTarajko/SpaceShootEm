@@ -34,12 +34,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject aboutMenu;
-    [Header("Toggles")]
-    [SerializeField] Toggle vibrationToggle;
-    [SerializeField] Toggle swipeMovementToggle;
-    [SerializeField] Toggle redFlashToggle;
-    [SerializeField] Toggle playAudioToggle;
-    [SerializeField] Toggle playMusicToggle;
     [Header("Reset")]
     [SerializeField] TMP_Text resetButtonText;
     [SerializeField] int resetButtonClicks;
@@ -50,6 +44,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] RectTransform UiContainer;
     [SerializeField] AudioSource audioSourceMenuMusic;
     [SerializeField] float musicVolume;
+    [SerializeField] SettingToggle settingTogglePrefab;
+    [SerializeField] Transform settingsContent;
 
     public class SliderSetting
     {
@@ -62,6 +58,7 @@ public class MenuManager : MonoBehaviour
     }
 
     private Dictionary<string, SliderSetting> sliderSettings = new Dictionary<string, SliderSetting>() { };
+    private Dictionary<string, SettingToggle> toggles = new Dictionary<string, SettingToggle>() { };
 
     public void ChangeMenu(GameObject targetMenu)
     {
@@ -74,6 +71,37 @@ public class MenuManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    //void GenerateSettingBars()
+    //{
+    //    foreach (KeyValuePair<string, bool> entry in data.settings)
+    //   {
+    //       SettingBar setting = Instantiate(settingBar, SettingsContent);
+    //       setting.gameController = this;
+    //      setting.settingName = entry.Key;
+    //       if (PlayerPrefs.HasKey(entry.Key))
+    //      {
+    //          if (!IntToBool(PlayerPrefs.GetInt(entry.Key)))
+    //          {
+    //              setting.ignore = 1;
+    //              setting.GetComponentInChildren<Toggle>().isOn = false;
+    //          }
+    //      }
+    //   }
+    // }
+
+    void GenerateSettingToggles()
+    {
+        string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash", "PlaySfx", "PlayMusic" };
+        for (int i = 0; i < boolsettings.Length; i++ )
+        {
+            SettingToggle setting = Instantiate(settingTogglePrefab, settingsContent);
+            toggles.Add(boolsettings[i], setting);
+            setting.text.text = boolsettings[i];
+            print($"{setting.toggle}, {boolsettings[i]}");
+            HandleToggle(setting.toggle, boolsettings[i]);
+        }
     }
 
     void Start()
@@ -93,25 +121,21 @@ public class MenuManager : MonoBehaviour
 
     private void StartMenu()
     {
+        GenerateSettingToggles();
         resetButtonClicks = 0;
         HandleText(lastScore, "Last score");
         HandleText(highScore, "Highscore");
         HandleText(sensitivityText, "Sensitivity");
         HandleText(sfxText, "SfxVolume");
         HandleText(musicText, "MusicVolume");
-        HandleToggle(vibrationToggle, "Vibration");
-        HandleToggle(swipeMovementToggle, "SwipeMovement");
-        HandleToggle(redFlashToggle, "RedFlash");
-        HandleToggle(playAudioToggle, "PlaySfx");
-        HandleToggle(playMusicToggle, "PlayMusic");
         SetSliderVisibility("Sensitivity");
         SetSliderVisibility("SfxVolume");
         SetSliderVisibility("MusicVolume");
         SetMusicVolume();
-        playMusicToggle.onValueChanged.AddListener(delegate { SetMusicVolume(); });
-        swipeMovementToggle.onValueChanged.AddListener(delegate { SetSliderVisibility("Sensitivity"); });
-        playAudioToggle.onValueChanged.AddListener(delegate { SetSliderVisibility("SfxVolume"); });
-        playMusicToggle.onValueChanged.AddListener(delegate { SetSliderVisibility("MusicVolume"); });
+        toggles["PlayMusic"].toggle.onValueChanged.AddListener(delegate { SetMusicVolume(); });
+        toggles["SwipeMovement"].toggle.onValueChanged.AddListener(delegate { SetSliderVisibility("Sensitivity"); });
+        toggles["PlaySfx"].toggle.onValueChanged.AddListener(delegate { SetSliderVisibility("SfxVolume"); });
+        toggles["PlayMusic"].toggle.onValueChanged.AddListener(delegate { SetSliderVisibility("MusicVolume"); });
     }
 
     public void SetMusicVolume()
