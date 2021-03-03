@@ -129,26 +129,29 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        if (data.isAlive)
         {
-            if (other.TryGetComponent<BasicEnemy>(out var basicEnemy))
+            if (other.CompareTag("Enemy"))
             {
-                TakeDamage(basicEnemy.damage);
-                basicEnemy.DealDamage(10);
+                if (other.TryGetComponent<BasicEnemy>(out var basicEnemy))
+                {
+                    TakeDamage(basicEnemy.damage);
+                    basicEnemy.DealDamage(10);
+                }
             }
-        }
-        if (other.CompareTag("PowerUp"))
-        {
-            if (other.TryGetComponent<PowerUp>(out var powerUp))
+            if (other.CompareTag("PowerUp"))
             {
-                powerUp.Collect();
+                if (other.TryGetComponent<PowerUp>(out var powerUp))
+                {
+                    powerUp.Collect();
+                }
             }
-        }
-        if (other.CompareTag("EnemyBullet"))
-        {
-            if (other.TryGetComponent<EnemyBullet>(out var enemyBullet))
+            if (other.CompareTag("EnemyBullet"))
             {
-                enemyBullet.Hit(this);
+                if (other.TryGetComponent<EnemyBullet>(out var enemyBullet))
+                {
+                    enemyBullet.Hit(this);
+                }
             }
         }
     }
