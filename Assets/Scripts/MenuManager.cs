@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] TMP_Text lastScore;
     [SerializeField] TMP_Text highScore;
+    [Header("Sensitivity")]
     [SerializeField] Slider sensitivitySlider;
     [SerializeField] GameObject sensitivityParent;
     [SerializeField] TMP_Text sensitivityText;
@@ -41,6 +42,18 @@ public class MenuManager : MonoBehaviour
     [SerializeField] AudioSource audioSourceMenuMusic;
     [SerializeField] float musicVolume;
 
+    public class SliderSetting
+    {
+        public GameObject parent;
+        public Slider slider;
+        public string conditionKey;
+        public bool conditionRequiredValue;
+        public TMP_Text textDisplay;
+        public float defaultValue;
+    }
+
+    private Dictionary<string, SliderSetting> sliderSettings = new Dictionary<string, SliderSetting>() { };
+
     public void ChangeMenu(GameObject targetMenu)
     {
         mainMenu.SetActive(false);
@@ -56,6 +69,7 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        sliderSettings.Add("Sensitivity", new SliderSetting() { parent = sensitivityParent, slider = sensitivitySlider, conditionKey = "SwipeMovement", conditionRequiredValue = true, textDisplay = sensitivityText, defaultValue = sensitivitySliderDefaultValue });
         audioSourceMenuMusic = MusicAudioSource.Instance.gameObject.GetComponent<AudioSource>(); ;
         //UiContainer.sizeDelta = new Vector2(Screen.height,Screen.height / 2 * (9f / 20f));
         initialResetButtonText = resetButtonText.text;
@@ -78,9 +92,9 @@ public class MenuManager : MonoBehaviour
         HandleToggle(playAudioToggle, "PlaySfx");
         HandleToggle(playMusicToggle, "PlayMusic");
         SetMusicVolume();
-        CheckForSensitivitySlider();
+        SetSliderVisibility("Sensitivity");
         playMusicToggle.onValueChanged.AddListener(delegate { SetMusicVolume(); });
-        swipeMovementToggle.onValueChanged.AddListener(delegate {CheckForSensitivitySlider(); });
+        swipeMovementToggle.onValueChanged.AddListener(delegate { SetSliderVisibility("Sensitivity"); });
     }
 
     private void SetMusicVolume()
@@ -123,11 +137,7 @@ public class MenuManager : MonoBehaviour
 
     private void HandleText(TMP_Text tmptext, string key)
     {
-        if (key.Equals("Sensitivity"))
-        {
-            tmptext.text = $"{key}: {PlayerPrefs.GetFloat(key):F2}";
-        }
-        else if (PlayerPrefs.HasKey(key))
+        if (PlayerPrefs.HasKey(key))
         {
             tmptext.text = $"{key}: {PlayerPrefs.GetInt(key)}";
         }
@@ -136,15 +146,20 @@ public class MenuManager : MonoBehaviour
             tmptext.text = "";
         }
     }
-    private void CheckForSensitivitySlider()
+    private void SetSliderVisibility(string setting)
     {
-        if (!PlayerPrefs.HasKey("SwipeMovement"))
+        bool toSetVisible = false;
+        if (!PlayerPrefs.HasKey(sliderSettings[setting].conditionKey))
         {
-            SetSlider("Sensitivity");
+            toSetVisible = sliderSettings[setting].conditionRequiredValue;
         }
-        else if (Methods.IntToBool(PlayerPrefs.GetInt("SwipeMovement")))
+        else if (Methods.IntToBool(PlayerPrefs.GetInt(sliderSettings[setting].conditionKey)) == sliderSettings[setting].conditionRequiredValue)
         {
-            SetSlider("Sensitivity");
+            toSetVisible = true;
+        }
+        if (toSetVisible)
+        {
+            SetSlider(setting);
         }
         else
         {
@@ -155,15 +170,33 @@ public class MenuManager : MonoBehaviour
     private void SetSlider(string setting)
     {
         sensitivityParent.gameObject.SetActive(true);
-        if (!PlayerPrefs.HasKey(setting))
+        if (PlayerPrefs.HasKey(setting))
         {
-            SetSensitivity();
+            SetSliderValueFromPrefs(setting);
         }
         else
         {
-            sensitivitySlider.value = PlayerPrefs.GetFloat(setting);
+            sensitivitySlider.value = sensitivitySliderDefaultValue;
+            SetFloatSetting(setting);
         }
     }
+
+    private void SetSliderValueFromPrefs(string setting)
+    {
+        sliderSettings[setting].slider.value = PlayerPrefs.GetFloat(setting);
+    }
+
+    public void SetFloatSetting(string setting)
+    {
+        PlayerPrefs.SetFloat(setting, (float)System.Math.Round(sliderSettings[setting].slider.value, 2));
+        PlayerPrefs.Save();
+        HandleFloatDisplay(setting);
+    }
+    private void HandleFloatDisplay(string setting)
+    {
+        sliderSettings[setting].textDisplay.text = $"{setting}: {PlayerPrefs.GetFloat(setting):F2}";
+    }
+
 
     public void StartGame()
     {
@@ -176,7 +209,6 @@ public class MenuManager : MonoBehaviour
         {
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
-            sensitivitySlider.value = sensitivitySliderDefaultValue;
             StartMenu();
             resetButtonText.text = initialResetButtonText;
             resetButtonText.fontSize = initialResetButtonFontSize;
@@ -187,13 +219,6 @@ public class MenuManager : MonoBehaviour
             resetButtonClicks += 1;
             resetButtonText.text = $"Are you sure? Tap { clicksToReset - resetButtonClicks } more times to reset.";
         }
-    }
-
-    public void SetSensitivity()
-    {
-        PlayerPrefs.SetFloat("Sensitivity", (float)System.Math.Round(sensitivitySlider.value,2));
-        PlayerPrefs.Save();
-        HandleText(sensitivityText, "Sensitivity");
     }
     
     private void Update()

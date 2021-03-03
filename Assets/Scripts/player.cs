@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] AudioSource audioSourceShoot;
     [SerializeField] AudioSource audioSourceHit;
     [SerializeField] AudioSource audioSourceDestroyed;
-    [SerializeField] AudioSource audioSourceMusic;
+    //[SerializeField] AudioSource audioSourceMusic;
     [SerializeField] ParticleSystem particleSystemDestroyed;
     [SerializeField] ParticleSystem particleSystemFire1;
     [SerializeField] ParticleSystem particleSystemFire2;
@@ -43,10 +43,10 @@ public class Player : MonoBehaviour
             inputLayer.OnDragAction += MouseFollowMovement;
         }
         transform.localScale *= data.scaling;
-        if (!data.boolSettings["PlayMusic"])
-        {
-            audioSourceMusic.volume = 0;
-        }
+        //if (!data.boolSettings["PlayMusic"])
+        //{
+        //    audioSourceMusic.volume = 0;
+        //}
         particleSystemFire1.Play();
         particleSystemFire2.Play();
         SetVolumes();
