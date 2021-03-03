@@ -15,20 +15,9 @@ public class MenuManager : MonoBehaviour
     private float H;
     private float S;
     private float V;
-    [Header("Sensitivity")]
-    [SerializeField] Slider sensitivitySlider;
-    [SerializeField] GameObject sensitivityParent;
-    [SerializeField] TMP_Text sensitivityText;
+    [Header("Settings default values")]
     [SerializeField] float sensitivitySliderDefaultValue;
-    [Header("SfxVolume")]
-    [SerializeField] Slider sfxSlider;
-    [SerializeField] GameObject sfxParent;
-    [SerializeField] TMP_Text sfxText;
     [SerializeField] float sfxSliderDefaultValue;
-    [Header("MusicVolume")]
-    [SerializeField] Slider musicSlider;
-    [SerializeField] GameObject musicParent;
-    [SerializeField] TMP_Text musicText;
     [SerializeField] float musicSliderDefaultValue;
     [Header("Menus")]
     [SerializeField] GameObject mainMenu;
@@ -45,22 +34,22 @@ public class MenuManager : MonoBehaviour
     [SerializeField] AudioSource audioSourceMenuMusic;
     [SerializeField] float musicVolume;
     [SerializeField] SettingToggle settingTogglePrefab;
+    [SerializeField] SettingSlider settingSliderPrefab;
     [SerializeField] Transform settingsContent;
 
-    public class SliderSetting
-    {
-        public GameObject parent;
-        public Slider slider;
-        public string conditionKey;
-        public bool conditionRequiredValue;
-        public TMP_Text textDisplay;
-        public float defaultValue;
-    }
-
+    private Dictionary<string, SettingSlider> sliders = new Dictionary<string, SettingSlider>() { };
     private Dictionary<string, SliderSetting> sliderSettings = new Dictionary<string, SliderSetting>() { };
     private Dictionary<string, SettingToggle> toggles = new Dictionary<string, SettingToggle>() { };
 
-    public void ChangeMenu(GameObject targetMenu)
+    public class SliderSetting
+    {
+        public string conditionKey;
+        public bool conditionRequiredValue;
+        public float defaultValue;
+    }
+
+
+public void ChangeMenu(GameObject targetMenu)
     {
         mainMenu.SetActive(false);
         settingsMenu.SetActive(false);
@@ -73,61 +62,58 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    //void GenerateSettingBars()
-    //{
-    //    foreach (KeyValuePair<string, bool> entry in data.settings)
-    //   {
-    //       SettingBar setting = Instantiate(settingBar, SettingsContent);
-    //       setting.gameController = this;
-    //      setting.settingName = entry.Key;
-    //       if (PlayerPrefs.HasKey(entry.Key))
-    //      {
-    //          if (!IntToBool(PlayerPrefs.GetInt(entry.Key)))
-    //          {
-    //              setting.ignore = 1;
-    //              setting.GetComponentInChildren<Toggle>().isOn = false;
-    //          }
-    //      }
-    //   }
-    // }
-
     void GenerateSettingToggles()
     {
+        sliderSettings.Add("Sensitivity", new SliderSetting() { conditionKey = "SwipeMovement", conditionRequiredValue = true, defaultValue = sensitivitySliderDefaultValue });
+        sliderSettings.Add("SfxVolume", new SliderSetting() { conditionKey = "PlaySfx", conditionRequiredValue = true, defaultValue = sfxSliderDefaultValue });
+        sliderSettings.Add("MusicVolume", new SliderSetting() { conditionKey = "PlayMusic", conditionRequiredValue = true, defaultValue = musicSliderDefaultValue });
         string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash", "PlaySfx", "PlayMusic" };
         for (int i = 0; i < boolsettings.Length; i++ )
         {
             SettingToggle setting = Instantiate(settingTogglePrefab, settingsContent);
             toggles.Add(boolsettings[i], setting);
             setting.text.text = boolsettings[i];
-            print($"{setting.toggle}, {boolsettings[i]}");
             HandleToggle(setting.toggle, boolsettings[i]);
+            foreach (KeyValuePair<string, SliderSetting> entry in sliderSettings)
+            {
+                if(entry.Value.conditionKey == boolsettings[i])
+                {
+                    GenerateSettingSlider(entry.Key);
+                }
+            }
         }
+    }
+
+    void GenerateSettingSlider(string chosenSlider)
+    {
+        SettingSlider slider = Instantiate(settingSliderPrefab, settingsContent);
+        sliders.Add(chosenSlider, slider);
+        slider.textDisplay.text = chosenSlider;
+        slider.conditionRequiredValue = sliderSettings[chosenSlider].conditionRequiredValue;
+        slider.conditionKey = sliderSettings[chosenSlider].conditionKey;
+        slider.defaultValue = sliderSettings[chosenSlider].defaultValue;
+        HandleText(slider.textDisplay, chosenSlider);
+        slider.slider.onValueChanged.AddListener(delegate { SetFloatSetting(chosenSlider); });
     }
 
     void Start()
     {
-        sliderSettings.Add("Sensitivity", new SliderSetting() { parent = sensitivityParent, slider = sensitivitySlider, conditionKey = "SwipeMovement", conditionRequiredValue = true, textDisplay = sensitivityText, defaultValue = sensitivitySliderDefaultValue });
-        sliderSettings.Add("SfxVolume", new SliderSetting() { parent = sfxParent, slider = sfxSlider, conditionKey = "PlaySfx", conditionRequiredValue = true, textDisplay = sfxText, defaultValue = sfxSliderDefaultValue });
-        sliderSettings.Add("MusicVolume", new SliderSetting() { parent = musicParent, slider = musicSlider, conditionKey = "PlayMusic", conditionRequiredValue = true, textDisplay = musicText, defaultValue = musicSliderDefaultValue });
         audioSourceMenuMusic = MusicAudioSource.Instance.gameObject.GetComponent<AudioSource>(); ;
         //UiContainer.sizeDelta = new Vector2(Screen.height,Screen.height / 2 * (9f / 20f));
         initialResetButtonText = resetButtonText.text;
         initialResetButtonFontSize = resetButtonText.fontSize;
-        mainMenu.SetActive(true);
-        settingsMenu.SetActive(false);
-        aboutMenu.SetActive(false);
         StartMenu();
     }
 
     private void StartMenu()
     {
+        mainMenu.SetActive(true);
+        settingsMenu.SetActive(false);
+        aboutMenu.SetActive(false);
         GenerateSettingToggles();
         resetButtonClicks = 0;
         HandleText(lastScore, "Last score");
         HandleText(highScore, "Highscore");
-        HandleText(sensitivityText, "Sensitivity");
-        HandleText(sfxText, "SfxVolume");
-        HandleText(musicText, "MusicVolume");
         SetSliderVisibility("Sensitivity");
         SetSliderVisibility("SfxVolume");
         SetSliderVisibility("MusicVolume");
@@ -167,10 +153,10 @@ public class MenuManager : MonoBehaviour
         {
             toggle.isOn = true;
         }
-        toggle.onValueChanged.AddListener(delegate { ToggleSetting(toggle.isOn, key); });
+        toggle.onValueChanged.AddListener(delegate { ChangeToggleSetting(toggle.isOn, key); });
     }
 
-    private void ToggleSetting(bool value, string key)
+    private void ChangeToggleSetting(bool value, string key)
     {
         PlayerPrefs.SetInt(key, Methods.BoolToInt(value));
         PlayerPrefs.Save();
@@ -190,11 +176,11 @@ public class MenuManager : MonoBehaviour
     private void SetSliderVisibility(string setting)
     {
         bool toSetVisible = false;
-        if (!PlayerPrefs.HasKey(sliderSettings[setting].conditionKey))
+        if (!PlayerPrefs.HasKey(sliders[setting].conditionKey))
         {
-            toSetVisible = sliderSettings[setting].conditionRequiredValue;
+            toSetVisible = sliders[setting].conditionRequiredValue;
         }
-        else if (Methods.IntToBool(PlayerPrefs.GetInt(sliderSettings[setting].conditionKey)) == sliderSettings[setting].conditionRequiredValue)
+        else if (Methods.IntToBool(PlayerPrefs.GetInt(sliders[setting].conditionKey)) == sliders[setting].conditionRequiredValue)
         {
             toSetVisible = true;
         }
@@ -204,38 +190,38 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            sliderSettings[setting].parent.SetActive(false);
+            sliders[setting].parent.SetActive(false);
         }
     }
 
     private void SetSlider(string setting)
     {
-        sliderSettings[setting].parent.SetActive(true);
+        sliders[setting].parent.SetActive(true);
         if (PlayerPrefs.HasKey(setting))
         {
             SetSliderValueFromPrefs(setting);
         }
         else
         {
-            sliderSettings[setting].slider.value = sliderSettings[setting].defaultValue;
+            sliders[setting].slider.value = sliders[setting].defaultValue;
         }
         SetFloatSetting(setting);
     }
 
     private void SetSliderValueFromPrefs(string setting)
     {
-        sliderSettings[setting].slider.value = PlayerPrefs.GetFloat(setting);
+        sliders[setting].slider.value = PlayerPrefs.GetFloat(setting);
     }
 
     public void SetFloatSetting(string setting)
     {
-        PlayerPrefs.SetFloat(setting, (float)System.Math.Round(sliderSettings[setting].slider.value, 2));
+        PlayerPrefs.SetFloat(setting, (float)System.Math.Round(sliders[setting].slider.value, 2));
         PlayerPrefs.Save();
         HandleFloatDisplay(setting);
     }
     private void HandleFloatDisplay(string setting)
     {
-        sliderSettings[setting].textDisplay.text = $"{setting}: {PlayerPrefs.GetFloat(setting):F2}";
+        sliders[setting].textDisplay.text = $"{setting}: {PlayerPrefs.GetFloat(setting):F2}";
     }
 
 
