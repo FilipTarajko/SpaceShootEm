@@ -69,7 +69,10 @@ public void ChangeMenu(GameObject targetMenu)
         sliderSettings.Add("Sensitivity", new SliderSetting() { conditionKey = "SwipeMovement", conditionRequiredValue = true, defaultValue = sensitivitySliderDefaultValue, minValue = 0.2f, maxValue = 5 });
         sliderSettings.Add("SfxVolume", new SliderSetting() { conditionKey = "PlaySfx", conditionRequiredValue = true, defaultValue = sfxSliderDefaultValue, minValue = 0.01f, maxValue = 1 });
         sliderSettings.Add("MusicVolume", new SliderSetting() { conditionKey = "PlayMusic", conditionRequiredValue = true, defaultValue = musicSliderDefaultValue, minValue = 0.01f, maxValue = 1 });
-        string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash", "PlaySfx", "PlayMusic" };
+        sliderSettings.Add("Red", new SliderSetting() { conditionKey = "CustomPlayerColor", conditionRequiredValue = true, defaultValue = 1, minValue = 0, maxValue = 1 });
+        sliderSettings.Add("Green", new SliderSetting() { conditionKey = "CustomPlayerColor", conditionRequiredValue = true, defaultValue = 1, minValue = 0, maxValue = 1 });
+        sliderSettings.Add("Blue", new SliderSetting() { conditionKey = "CustomPlayerColor", conditionRequiredValue = true, defaultValue = 1, minValue = 0, maxValue = 1 });
+        string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash", "PlaySfx", "PlayMusic", "CustomPlayerColor" };
         for (int i = 0; i < boolsettings.Length; i++ )
         {
             SettingToggle setting = Instantiate(settingTogglePrefab, settingsContent);
@@ -102,6 +105,7 @@ public void ChangeMenu(GameObject targetMenu)
         {
             slider.slider.onValueChanged.AddListener(delegate { SetMusicVolume(); });
         }
+        SetSliderVisibility(chosenSlider);
     }
 
     void Start()
@@ -122,9 +126,6 @@ public void ChangeMenu(GameObject targetMenu)
         resetButtonClicks = 0;
         HandleText(lastScore, "Last score");
         HandleText(highScore, "Highscore");
-        SetSliderVisibility("Sensitivity");
-        SetSliderVisibility("SfxVolume");
-        SetSliderVisibility("MusicVolume");
         SetMusicVolume();
         toggles["PlayMusic"].toggle.onValueChanged.AddListener(delegate { SetMusicVolume(); });
         toggles["SwipeMovement"].toggle.onValueChanged.AddListener(delegate { SetSliderVisibility("Sensitivity"); });

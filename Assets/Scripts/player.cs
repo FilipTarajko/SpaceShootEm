@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField] ParticleSystem particleSystemFire2;
     [SerializeField] GameObject particleSystemDestroyedParent;
     [SerializeField] Vector3 particleSystemDestroyedParentSpeed;
+    [SerializeField] SpriteRenderer shipSprite;
 
     private void Start()
     {
@@ -50,6 +51,15 @@ public class Player : MonoBehaviour
         particleSystemFire1.Play();
         particleSystemFire2.Play();
         SetVolumes();
+        SetPlayerColor();
+    }
+
+    void SetPlayerColor()
+    {
+        if (Methods.IntToBool(PlayerPrefs.GetInt("CustomPlayerColor")))
+        {
+            shipSprite.color = new Color(PlayerPrefs.GetFloat("Red"), PlayerPrefs.GetFloat("Green"), PlayerPrefs.GetFloat("Blue"));
+        }
     }
 
     private void SetVolumes()

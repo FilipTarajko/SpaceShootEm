@@ -1866,12 +1866,12 @@ MonoBehaviour:
   audioSourceShoot: {fileID: 1434007622}
   audioSourceHit: {fileID: 1434007624}
   audioSourceDestroyed: {fileID: 1434007625}
-  audioSourceMusic: {fileID: 0}
   particleSystemDestroyed: {fileID: 2061120837}
   particleSystemFire1: {fileID: 1356117622}
   particleSystemFire2: {fileID: 1059526456}
   particleSystemDestroyedParent: {fileID: 2061120834}
   particleSystemDestroyedParentSpeed: {x: 0, y: 0, z: 0}
+  shipSprite: {fileID: 697361703}
 --- !u!82 &1434007622
 AudioSource:
   m_ObjectHideFlags: 0
