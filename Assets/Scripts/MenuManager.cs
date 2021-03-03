@@ -46,6 +46,8 @@ public class MenuManager : MonoBehaviour
         public string conditionKey;
         public bool conditionRequiredValue;
         public float defaultValue;
+        public float minValue;
+        public float maxValue;
     }
 
 
@@ -64,9 +66,9 @@ public void ChangeMenu(GameObject targetMenu)
 
     void GenerateSettingToggles()
     {
-        sliderSettings.Add("Sensitivity", new SliderSetting() { conditionKey = "SwipeMovement", conditionRequiredValue = true, defaultValue = sensitivitySliderDefaultValue });
-        sliderSettings.Add("SfxVolume", new SliderSetting() { conditionKey = "PlaySfx", conditionRequiredValue = true, defaultValue = sfxSliderDefaultValue });
-        sliderSettings.Add("MusicVolume", new SliderSetting() { conditionKey = "PlayMusic", conditionRequiredValue = true, defaultValue = musicSliderDefaultValue });
+        sliderSettings.Add("Sensitivity", new SliderSetting() { conditionKey = "SwipeMovement", conditionRequiredValue = true, defaultValue = sensitivitySliderDefaultValue, minValue = 0.2f, maxValue = 5 });
+        sliderSettings.Add("SfxVolume", new SliderSetting() { conditionKey = "PlaySfx", conditionRequiredValue = true, defaultValue = sfxSliderDefaultValue, minValue = 0.01f, maxValue = 1 });
+        sliderSettings.Add("MusicVolume", new SliderSetting() { conditionKey = "PlayMusic", conditionRequiredValue = true, defaultValue = musicSliderDefaultValue, minValue = 0.01f, maxValue = 1 });
         string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash", "PlaySfx", "PlayMusic" };
         for (int i = 0; i < boolsettings.Length; i++ )
         {
@@ -91,9 +93,15 @@ public void ChangeMenu(GameObject targetMenu)
         slider.textDisplay.text = chosenSlider;
         slider.conditionRequiredValue = sliderSettings[chosenSlider].conditionRequiredValue;
         slider.conditionKey = sliderSettings[chosenSlider].conditionKey;
+        slider.slider.minValue = sliderSettings[chosenSlider].minValue;
+        slider.slider.maxValue = sliderSettings[chosenSlider].maxValue;
         slider.defaultValue = sliderSettings[chosenSlider].defaultValue;
         HandleText(slider.textDisplay, chosenSlider);
         slider.slider.onValueChanged.AddListener(delegate { SetFloatSetting(chosenSlider); });
+        if (chosenSlider == "MusicVolume")
+        {
+            slider.slider.onValueChanged.AddListener(delegate { SetMusicVolume(); });
+        }
     }
 
     void Start()
@@ -236,9 +244,7 @@ public void ChangeMenu(GameObject targetMenu)
         {
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
-            StartMenu();
-            resetButtonText.text = initialResetButtonText;
-            resetButtonText.fontSize = initialResetButtonFontSize;
+            SceneManager.LoadScene(0);
         }
         else
         {
