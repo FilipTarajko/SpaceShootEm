@@ -200,7 +200,7 @@ MonoBehaviour:
   movementVector: {x: 0, y: -1, z: 0}
   ColorForParticles1: {r: 0.69803923, g: 0, b: 1, a: 1}
   ColorForParticles2: {r: 0.23529413, g: 0.09019608, b: 0.29411766, a: 1}
-  volleySize: 6
+  volleySize: 5
   volleyTime: 2
   bulletTime: 0.15
   bulletSpeed: 700

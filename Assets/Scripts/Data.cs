@@ -71,8 +71,18 @@ public class Data : MonoBehaviour
         bottomlimit *= Screen.height/2;
         sidelimit *= Screen.height/2*(9f/20f);
         floatSettings.Add("Sensitivity", 1f);
+        floatSettings.Add("SfxVolume", 1f);
+        floatSettings.Add("MusicVolume", 1f);
         string[] boolsettings = { "Vibration", "SwipeMovement", "RedFlash", "PlaySfx", "PlayMusic" };
         AddBoolSettings(boolsettings);
+    }
+
+    private void Start()
+    {
+        ListBoolSettings();
+        LoadBoolSettings();
+        ListFloatSettings();
+        LoadFloatSettings();
     }
 
     public bool CheckIfOut(Transform transform)
@@ -99,14 +109,6 @@ public class Data : MonoBehaviour
         {
             boolSettings.Add(boolsettings[i], true);
         }
-    }
-
-    private void Start()
-    {
-        ListBoolSettings();
-        LoadBoolSettings();
-        ListFloatSettings();
-        LoadFloatSettings();
     }
 
     private void ListBoolSettings()

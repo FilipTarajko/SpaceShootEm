@@ -9,19 +9,27 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] TMP_Text lastScore;
     [SerializeField] TMP_Text highScore;
-    [Header("Sensitivity")]
-    [SerializeField] Slider sensitivitySlider;
-    [SerializeField] GameObject sensitivityParent;
-    [SerializeField] TMP_Text sensitivityText;
-    [SerializeField] TMP_Text resetButtonText;
-    [SerializeField] float sensitivitySliderDefaultValue;
-
     [SerializeField] TMP_Text authorTextShadow;
     [SerializeField] TMP_Text titleTextShadow;
     public float colorChangeSpeed;
     private float H;
     private float S;
     private float V;
+    [Header("Sensitivity")]
+    [SerializeField] Slider sensitivitySlider;
+    [SerializeField] GameObject sensitivityParent;
+    [SerializeField] TMP_Text sensitivityText;
+    [SerializeField] float sensitivitySliderDefaultValue;
+    [Header("SfxVolume")]
+    [SerializeField] Slider sfxSlider;
+    [SerializeField] GameObject sfxParent;
+    [SerializeField] TMP_Text sfxText;
+    [SerializeField] float sfxSliderDefaultValue;
+    [Header("MusicVolume")]
+    [SerializeField] Slider musicSlider;
+    [SerializeField] GameObject musicParent;
+    [SerializeField] TMP_Text musicText;
+    [SerializeField] float musicSliderDefaultValue;
     [Header("Menus")]
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject settingsMenu;
@@ -33,6 +41,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Toggle playAudioToggle;
     [SerializeField] Toggle playMusicToggle;
     [Header("Reset")]
+    [SerializeField] TMP_Text resetButtonText;
     [SerializeField] int resetButtonClicks;
     [SerializeField] int clicksToReset;
     private string initialResetButtonText;
@@ -70,6 +79,8 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         sliderSettings.Add("Sensitivity", new SliderSetting() { parent = sensitivityParent, slider = sensitivitySlider, conditionKey = "SwipeMovement", conditionRequiredValue = true, textDisplay = sensitivityText, defaultValue = sensitivitySliderDefaultValue });
+        sliderSettings.Add("SfxVolume", new SliderSetting() { parent = sfxParent, slider = sfxSlider, conditionKey = "PlaySfx", conditionRequiredValue = true, textDisplay = sfxText, defaultValue = sfxSliderDefaultValue });
+        sliderSettings.Add("MusicVolume", new SliderSetting() { parent = musicParent, slider = musicSlider, conditionKey = "PlayMusic", conditionRequiredValue = true, textDisplay = musicText, defaultValue = musicSliderDefaultValue });
         audioSourceMenuMusic = MusicAudioSource.Instance.gameObject.GetComponent<AudioSource>(); ;
         //UiContainer.sizeDelta = new Vector2(Screen.height,Screen.height / 2 * (9f / 20f));
         initialResetButtonText = resetButtonText.text;
@@ -86,24 +97,30 @@ public class MenuManager : MonoBehaviour
         HandleText(lastScore, "Last score");
         HandleText(highScore, "Highscore");
         HandleText(sensitivityText, "Sensitivity");
+        HandleText(sfxText, "SfxVolume");
+        HandleText(musicText, "MusicVolume");
         HandleToggle(vibrationToggle, "Vibration");
         HandleToggle(swipeMovementToggle, "SwipeMovement");
         HandleToggle(redFlashToggle, "RedFlash");
         HandleToggle(playAudioToggle, "PlaySfx");
         HandleToggle(playMusicToggle, "PlayMusic");
-        SetMusicVolume();
         SetSliderVisibility("Sensitivity");
+        SetSliderVisibility("SfxVolume");
+        SetSliderVisibility("MusicVolume");
+        SetMusicVolume();
         playMusicToggle.onValueChanged.AddListener(delegate { SetMusicVolume(); });
         swipeMovementToggle.onValueChanged.AddListener(delegate { SetSliderVisibility("Sensitivity"); });
+        playAudioToggle.onValueChanged.AddListener(delegate { SetSliderVisibility("SfxVolume"); });
+        playMusicToggle.onValueChanged.AddListener(delegate { SetSliderVisibility("MusicVolume"); });
     }
 
-    private void SetMusicVolume()
+    public void SetMusicVolume()
     {
         if (PlayerPrefs.HasKey("PlayMusic"))
         {
             if (Methods.IntToBool(PlayerPrefs.GetInt("PlayMusic")))
             {
-                audioSourceMenuMusic.volume = musicVolume;
+                audioSourceMenuMusic.volume = musicVolume * (PlayerPrefs.GetFloat("MusicVolume"));
             }
             else
             {
@@ -112,7 +129,7 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            audioSourceMenuMusic.volume = musicVolume;
+            audioSourceMenuMusic.volume = musicVolume * (PlayerPrefs.GetFloat("MusicVolume"));
         }
     }
 
@@ -163,22 +180,22 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            sensitivityParent.gameObject.SetActive(false);
+            sliderSettings[setting].parent.SetActive(false);
         }
     }
 
     private void SetSlider(string setting)
     {
-        sensitivityParent.gameObject.SetActive(true);
+        sliderSettings[setting].parent.SetActive(true);
         if (PlayerPrefs.HasKey(setting))
         {
             SetSliderValueFromPrefs(setting);
         }
         else
         {
-            sensitivitySlider.value = sensitivitySliderDefaultValue;
-            SetFloatSetting(setting);
+            sliderSettings[setting].slider.value = sliderSettings[setting].defaultValue;
         }
+        SetFloatSetting(setting);
     }
 
     private void SetSliderValueFromPrefs(string setting)

@@ -54,9 +54,10 @@ public class Player : MonoBehaviour
 
     private void SetVolumes()
     {
-        audioSourceShoot.volume = data.sfxShootDefault;
-        audioSourceHit.volume = data.sfxHitDefault;
-        audioSourceDestroyed.volume = data.sfxDestroyedDefault;
+        float sfxVolume = data.floatSettings["SfxVolume"];
+        audioSourceShoot.volume = data.sfxShootDefault * sfxVolume;
+        audioSourceHit.volume = data.sfxHitDefault * sfxVolume;
+        audioSourceDestroyed.volume = data.sfxDestroyedDefault * sfxVolume;
     }
 
     private void Update()
