@@ -9,11 +9,11 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] TMP_Text lastScore;
     [SerializeField] TMP_Text highScore;
-    [SerializeField] Slider slider;
+    [SerializeField] Slider sensitivitySlider;
     [SerializeField] GameObject sensitivityParent;
     [SerializeField] TMP_Text sensitivityText;
     [SerializeField] TMP_Text resetButtonText;
-    [SerializeField] float sliderDefaultValue;
+    [SerializeField] float sensitivitySliderDefaultValue;
 
     [SerializeField] TMP_Text authorTextShadow;
     [SerializeField] TMP_Text titleTextShadow;
@@ -39,7 +39,6 @@ public class MenuManager : MonoBehaviour
     [Header("")]
     [SerializeField] RectTransform UiContainer;
     [SerializeField] AudioSource audioSourceMenuMusic;
-    [SerializeField] float musicTime;
     [SerializeField] float musicVolume;
 
     public void ChangeMenu(GameObject targetMenu)
@@ -79,7 +78,6 @@ public class MenuManager : MonoBehaviour
         HandleToggle(playAudioToggle, "PlaySfx");
         HandleToggle(playMusicToggle, "PlayMusic");
         SetMusicVolume();
-        StartCoroutine(PlayMenuMusic());
         CheckForSensitivitySlider();
         playMusicToggle.onValueChanged.AddListener(delegate { SetMusicVolume(); });
         swipeMovementToggle.onValueChanged.AddListener(delegate {CheckForSensitivitySlider(); });
@@ -101,18 +99,6 @@ public class MenuManager : MonoBehaviour
         else
         {
             audioSourceMenuMusic.volume = musicVolume;
-        }
-    }
-
-    private IEnumerator PlayMenuMusic()
-    {
-        for(;;)
-        {
-            if (!audioSourceMenuMusic.isPlaying)
-            {
-                audioSourceMenuMusic.Play();
-            }
-            yield return new WaitForSeconds(musicTime);
         }
     }
 
@@ -154,11 +140,11 @@ public class MenuManager : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("SwipeMovement"))
         {
-            SetSensitivitySlider();
+            SetSlider("Sensitivity");
         }
         else if (Methods.IntToBool(PlayerPrefs.GetInt("SwipeMovement")))
         {
-            SetSensitivitySlider();
+            SetSlider("Sensitivity");
         }
         else
         {
@@ -166,16 +152,16 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    private void SetSensitivitySlider()
+    private void SetSlider(string setting)
     {
         sensitivityParent.gameObject.SetActive(true);
-        if (!PlayerPrefs.HasKey("Sensitivity"))
+        if (!PlayerPrefs.HasKey(setting))
         {
-            SetSensitivity((float)slider.value);
+            SetSensitivity();
         }
         else
         {
-            slider.value = PlayerPrefs.GetFloat("Sensitivity");
+            sensitivitySlider.value = PlayerPrefs.GetFloat(setting);
         }
     }
 
@@ -190,7 +176,7 @@ public class MenuManager : MonoBehaviour
         {
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
-            slider.value = sliderDefaultValue;
+            sensitivitySlider.value = sensitivitySliderDefaultValue;
             StartMenu();
             resetButtonText.text = initialResetButtonText;
             resetButtonText.fontSize = initialResetButtonFontSize;
@@ -203,9 +189,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void SetSensitivity(float sensitivity)
+    public void SetSensitivity()
     {
-        PlayerPrefs.SetFloat("Sensitivity", (float)System.Math.Round(sensitivity,2));
+        PlayerPrefs.SetFloat("Sensitivity", (float)System.Math.Round(sensitivitySlider.value,2));
         PlayerPrefs.Save();
         HandleText(sensitivityText, "Sensitivity");
     }

@@ -1001,7 +1001,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e55288da677785a4f9abc9540a2ed0d0, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -2706,7 +2706,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1999722882}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: SensitivitySliderSet
+        m_MethodName: SetSensitivity
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5086,11 +5086,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastScore: {fileID: 2083030614}
   highScore: {fileID: 1565885863}
-  slider: {fileID: 908917180}
+  sensitivitySlider: {fileID: 908917180}
   sensitivityParent: {fileID: 1125361047}
   sensitivityText: {fileID: 2087455115}
   resetButtonText: {fileID: 978916740}
-  sliderDefaultValue: 1
+  sensitivitySliderDefaultValue: 1
   authorTextShadow: {fileID: 1468752822}
   titleTextShadow: {fileID: 1451029236}
   colorChangeSpeed: 0.3
@@ -5106,7 +5106,6 @@ MonoBehaviour:
   clicksToReset: 5
   UiContainer: {fileID: 1550779607}
   audioSourceMenuMusic: {fileID: 0}
-  musicTime: 15
   musicVolume: 0.01
 --- !u!4 &1999722883
 Transform:
