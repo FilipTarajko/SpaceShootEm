@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
 
     void SetPlayerColor()
     {
-        if (Methods.IntToBool(PlayerPrefs.GetInt("CustomPlayerColor")))
+        if (Methods.IntToBool(PlayerPrefs.GetInt("CustomPlayerColor")) || !PlayerPrefs.HasKey("CustomPlayerColor"))
         {
             shipSprite.color = new Color(PlayerPrefs.GetFloat("Red"), PlayerPrefs.GetFloat("Green"), PlayerPrefs.GetFloat("Blue"));
             var main = particleSystemDestroyed.main;
