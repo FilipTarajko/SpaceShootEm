@@ -904,7 +904,9 @@ MonoBehaviour:
   powerUpPercentChancePerHealth: 1
   attackSpeedPerPowerUp: 1
   scaling: 0
-  musicLength: 0
+  sfxShootDefault: 0.3
+  sfxHitDefault: 1
+  sfxDestroyedDefault: 0.3
   previousPositions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
@@ -1882,7 +1884,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ebe2e87191774384398ba055cc0369c8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.216
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

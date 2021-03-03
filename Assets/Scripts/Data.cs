@@ -53,7 +53,9 @@ public class Data : MonoBehaviour
     [Header("Scaling")]
     public float scaling;
     [Header("sfx/music")]
-    public float musicLength;
+    public float sfxShootDefault;
+    public float sfxHitDefault;
+    public float sfxDestroyedDefault;
 
     public Dictionary<string, float> floatSettings = new Dictionary<string, float>() { };
     public Dictionary<string, bool> boolSettings = new Dictionary<string, bool>() { };

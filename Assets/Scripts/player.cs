@@ -49,6 +49,14 @@ public class Player : MonoBehaviour
         }
         particleSystemFire1.Play();
         particleSystemFire2.Play();
+        SetVolumes();
+    }
+
+    private void SetVolumes()
+    {
+        audioSourceShoot.volume = data.sfxShootDefault;
+        audioSourceHit.volume = data.sfxHitDefault;
+        audioSourceDestroyed.volume = data.sfxDestroyedDefault;
     }
 
     private void Update()
